@@ -268,3 +268,6 @@ class RcPresentationTitle(Slide):
         )
         self.next_slide()
         self.new_slide("What's happening?", next_bit)
+
+# python -m manim_slides render RadianceIntervals.py LongCharView RcProbeNear RcProbeFar
+# python -m manim_slides convert LongCharView RcProbeNear RcProbeFar test.html -ccontrols=true -cslide_number=true
