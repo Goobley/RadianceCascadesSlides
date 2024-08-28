@@ -2,6 +2,7 @@ PYTHON ?= python
 
 
 SCENE_NAMES = LongCharView RcProbeNear RcProbeFar
+JSON_SCENES := $(SCENE_NAMES:%=slides/%.json)
 HTML_SCENES := $(SCENE_NAMES:%=intermediate_html/%.html)
 
 slides/%.json: %.py
@@ -12,6 +13,8 @@ intermediate_html/%.html: slides/%.json
 
 presentation.html: BuildSlides.py $(HTML_SCENES)
 	$(PYTHON) $< $(SCENE_NAMES)
+
+all_slides: $(JSON_SCENES)
 
 .PHONY: clean
 clean:
