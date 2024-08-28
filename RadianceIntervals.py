@@ -3,6 +3,8 @@ import manim as mn
 from manim_slides import Slide
 import numpy as np
 
+mn.config.background_color = "#111111"
+
 TRI_POS = [1.05, 1.2 + np.sqrt(3) / 2 * 0.15, 0]
 CIRC_POS = [1.0, 1.0, 0]
 RECT_POS = [0.575, 1.075, 0]
