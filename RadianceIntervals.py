@@ -142,24 +142,6 @@ class ProbeView(Slide):
 
         self.wait()
 
-class LongCharView(ProbeView):
-    near_length = 0.0
-    far_length = 20.0
-
-class RcProbeNear(ProbeView):
-    near_length = 1.8
-    far_length = 3.5
-    is_rc_probe = True
-    is_first_show = False
-    overdraw_annulus = True
-
-class RcProbeFar(ProbeView):
-    near_length = 3.5
-    far_length = 7
-    is_rc_probe = True
-    is_first_show = False
-    overdraw_annulus = True
-
 
 # class RcPresentationTitle(Slide):
 #     def construct(self):
