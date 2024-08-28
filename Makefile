@@ -1,7 +1,7 @@
 PYTHON ?= python
 
 
-SCENE_NAMES = LongCharView RcProbeNear RcProbeFar
+SCENE_NAMES = LongCharView RcProbeNear RcProbeFar ProbeGrid InterpolatedProbe
 JSON_SCENES := $(SCENE_NAMES:%=slides/%.json)
 HTML_SCENES := $(SCENE_NAMES:%=intermediate_html/%.html)
 
