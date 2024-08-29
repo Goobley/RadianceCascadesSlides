@@ -1,0 +1,134 @@
+---
+title: '[Towards the Next Generation<br/>of Radiative Transfer Models:]{.r-fit-text}'
+subtitle: '[Radiance Cascades]{style="color: var(--teal_c);"}'
+author:
+  name: Chris Osborne
+  affiliation: University of Glasgow
+format:
+  revealjs:
+    slide-number: true
+    footer: "Radiance Cascades"
+    theme: [night, my_style.scss]
+    progress: false
+    html-math-method: katex
+---
+
+## Contents
+
+::: {.v-center-container}
+
+- Where are we now?
+- Radiance Cascades
+- Applications
+
+:::
+
+## Non-LTE Radiative Transfer {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- Coupling between radiation field and atomic transitions.
+- Extremely computationally demanding, but necessary for many spectral lines.
+- Needed for models, diagnostics, and inversions.
+:::
+
+::: {.column width="50%"}
+<video loop data-autoplay src="HinodeProm.mp4" width="99%"></video>
+:::
+
+::::
+
+## Non-LTE Radiative Transfer {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%" .incremental}
+- RT codes designed around the idea of smooth atmospheres...
+- But ours look like this
+:::
+
+::: {.column width="50%" .fragment}
+![](jk_atmos.png){style="max-width: 80%;"}
+
+[Jenkins & Keppens 2022]{.attrib}
+
+:::
+
+::::
+
+## Radiative Rates?
+
+## Most Important Quantities {.smaller}
+
+::: {.v-center-container .horiz-center}
+
+::: {.column}
+
+```{=tex}
+\begin{align*}
+    J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
+    &\vec{p} \in \mathbb{R}^3, \hat{\omega} \in \mathbb{S}^2\\
+\end{align*}
+```
+
+- Specific intensity and its first moment.
+- 4 and 6 dimensional functions!
+
+:::
+
+:::
+
+## Prominence Albedo
+
+![](JenkinsAlbedo.png){fig-align="center"}
+
+::: {.horiz-center}
+[Jenkins+ 2024]{.attrib}
+:::
+
+## Ray Effects
+
+## Desired Result
+
+{{ PenumbraCriterion }}
+
+## Observations {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="60%"}
+
+```{=tex}
+\begin{cases}
+A < B,\\
+\alpha > \beta.
+\end{cases}
+```
+with some small angles approximations...
+```{=tex}
+\begin{cases}
+\Delta_s < F(D) \propto D,\\
+\Delta_\omega < G(1/D) \propto 1/D.
+\end{cases}
+```
+
+$\Delta_s$: spatial\
+$\Delta_\omega$: angular
+
+:::
+
+::: {.column width="50%"}
+
+![](PenumbraCriterionFrame.png)
+
+:::
+::::
+
+
+
+
+
+# New content
+
+- Blah

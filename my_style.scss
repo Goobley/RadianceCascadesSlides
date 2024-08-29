@@ -1,0 +1,92 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: "Palatino Linotype", "Book Antiqua", Palatino,
+  FreeSerif, serif !default;
+
+$presentation-h1-font-size: 1.6em !default;
+$presentation-h2-font-size: 1.3em !default;
+$presentation-h3-font-size: 1em !default;
+$presentation-h4-font-size: 0.7em !default;
+
+// headings
+$presentation-heading-font: "Palatino Linotype", "Book Antiqua", Palatino,
+  FreeSerif, serif !default;
+
+$revealjs-heading-font: "Palatino Linotype", "Book Antiqua", Palatino,
+  FreeSerif, serif !default;
+/*-- scss:rules --*/
+
+.reveal a {
+  line-height: 1.3em;
+}
+
+.v-center-container {
+  display: flex !important;
+//   justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+span.attrib {
+    font-size: 0.8em;
+    color: var(--grey_b);
+}
+
+div.horiz-center {
+    text-align: center;
+}
+
+:root {
+    --blue_a: #c7e9f1;
+    --blue_b: #9cdceb;
+    --blue_c: #58c4dd;
+    --blue_d: #29abca;
+    --blue_e: #236b8e;
+    --teal_a: #acead7;
+    --teal_b: #76ddc0;
+    --teal_c: #5cd0b3;
+    --teal_d: #55c1a7;
+    --teal_e: #49a88f;
+    --green_a: #c9e2ae;
+    --green_b: #a6cf8c;
+    --green_c: #83c167;
+    --green_d: #77b05d;
+    --green_e: #699c52;
+    --yellow_a: #fff1b6;
+    --yellow_b: #ffea94;
+    --yellow_c: #ffff00;
+    --yellow_d: #f4d345;
+    --yellow_e: #e8c11c;
+    --gold_a: #f7c797;
+    --gold_b: #f9b775;
+    --gold_c: #f0ac5f;
+    --gold_d: #e1a158;
+    --gold_e: #c78d46;
+    --red_a: #f7a1a3;
+    --red_b: #ff8080;
+    --red_c: #fc6255;
+    --red_d: #e65a4c;
+    --red_e: #cf5044;
+    --maroon_a: #ecabc1;
+    --maroon_b: #ec92ab;
+    --maroon_c: #c55f73;
+    --maroon_d: #a24d61;
+    --maroon_e: #94424f;
+    --purple_a: #caa3e8;
+    --purple_b: #b189c6;
+    --purple_c: #9a72ac;
+    --purple_d: #715582;
+    --purple_e: #644172;
+    --grey_a: #dddddd;
+    --grey_b: #bbbbbb;
+    --grey_c: #888888;
+    --grey_d: #444444;
+    --grey_e: #222222;
+    --pink: #d147bd;
+    --light_pink: #dc75cd;
+    --orange: #ff862f;
+    --light_brown: #cd853f;
+    --dark_brown: #8b4513;
+    --grey_brown: #736357;
+}
