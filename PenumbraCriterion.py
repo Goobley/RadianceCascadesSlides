@@ -3,9 +3,11 @@ import manim as mn
 from manim_slides import Slide
 import numpy as np
 
+mn.config.background_color = "#111111"
+
 LEFT_EDGE = -4.0
 RIGHT_EDGE = 4.0
-IM_RES = 1200
+IM_RES = 2000
 
 class PenumbraCriterion(Slide):
     def construct(self):
@@ -108,7 +110,7 @@ class PenumbraCriterion(Slide):
         ]
         for x in to_add[1:]:
             x.z_index = 10
-        to_add.append(mn.MathTex("A").scale(0.8).move_to(to_add[0].get_center() + 2 * mn.DOWN * mn.SMALL_BUFF))
+        to_add.append(mn.MathTex("A").scale(0.8).move_to(to_add[0].get_center() + 2.5 * mn.DOWN * mn.SMALL_BUFF))
         self.play(mn.Write(x) for x in to_add)
 
         t1b = (b_plane_y - light_a[1]) / d1[1]
@@ -123,7 +125,7 @@ class PenumbraCriterion(Slide):
         ]
         for x in to_add[1:]:
             x.z_index = 10
-        to_add.append(mn.MathTex("B").scale(0.8).move_to(to_add[0].get_center() + 2 * mn.DOWN * mn.SMALL_BUFF))
+        to_add.append(mn.MathTex("B").scale(0.8).move_to(to_add[0].get_center() + 2.5 * mn.DOWN * mn.SMALL_BUFF))
         self.play(mn.Write(x) for x in to_add)
 
         self.next_slide()
@@ -136,7 +138,7 @@ class PenumbraCriterion(Slide):
         angle = mn.Angle(l2, l1, radius=0.5, color=alpha_colour)
         angle_label = mn.MathTex(r"\alpha").scale(0.8).move_to(
             mn.Angle(
-                l2, l1, radius=0.5 + 3 * SMALL_BUFF
+                l2, l1, radius=0.5 + 2 * SMALL_BUFF
             ).point_from_proportion(0.5)
         )
         to_add = [elbow, angle]
@@ -151,7 +153,7 @@ class PenumbraCriterion(Slide):
         angle = mn.Angle(l2, l1, radius=0.8, color=beta_colour)
         angle_label = mn.MathTex(r"\beta").scale(0.8).move_to(
             mn.Angle(
-                l2, l1, radius=0.8 + 3 * SMALL_BUFF
+                l2, l1, radius=0.8 + 2 * SMALL_BUFF
             ).point_from_proportion(0.5)
         )
         to_add = [mn.DashedVMobject(elbow, num_dashes=55), angle]
