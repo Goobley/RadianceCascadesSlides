@@ -13,6 +13,12 @@ format:
     html-math-method: katex
 ---
 
+<!-- TODO
+- Some other complex atmospheres, muram, bifrost
+- ionisation
+- add logos
+- Concluding remarks -->
+
 ## Contents
 
 ::: {.v-center-container}
@@ -49,21 +55,32 @@ format:
 
 :::: {.columns .v-center-container}
 
-::: {.column width="50%" .incremental}
+::: {.column width="50%"}
 - RT codes designed around the idea of smooth atmospheres...
+
+::: {.incremental}
 - But ours look like this
 :::
+:::
 
-::: {.column width="50%" .fragment}
+::: {.column width="50%" .r-stack}
+
+::: {.fragment .current-visible}
 ![](static_assets/jk_atmos.png){style="max-width: 80%;"}
 
-[Jenkins & Keppens 2022]{.attrib}
+[Jenkins & Keppens 2021]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/PenumbraCriterionFrame.png){style="max-width: 80%;"}
+
+[TODO: Get some more things]{.attrib}
+:::
 
 :::
 
 ::::
 
-## Radiative Rates?
 
 ## Most Important Quantities {.smaller}
 
@@ -71,6 +88,11 @@ format:
 
 ::: {.column}
 
+- Radiative rates depend on intensity.
+- Intensity depends on radiative rates.
+
+:::{.fragment}
+<br/>
 ```{=tex}
 \begin{align*}
     J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
@@ -80,6 +102,7 @@ format:
 
 - Specific intensity and its first moment.
 - 4 and 6 dimensional functions!
+:::
 
 :::
 
@@ -211,6 +234,67 @@ t_i \propto 2^{\alpha i}
 Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
 :::
 
-## Applications
+# Application
 
-- Blah
+## Application {.smaller}
+
+::: {.horiz-center}
+::: {}
+<video controls loop data-autoplay src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;"></video>
+:::
+[Jenkins & Keppens 2021]{.attrib}
+:::
+
+## In particular... {.smaller}
+
+<br/><br/>
+![](static_assets/jk20200550_params.png){fig-align="center"}
+
+::: {.attrib}
+- 5.7 km resolution!
+- 3072 x 2048
+:::
+
+
+## Spectra -- Ca ɪɪ K {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" height="80%" style="max-width: 80%;"></video>
+
+:::
+
+## Spectra -- Ly β {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/H_I_102.57_nm.mp4" height="80%" style="max-width: 80%;"></video>
+
+:::
+
+## 1.5D Comparison -- Prominence {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
+
+## 1.5D Comparison -- Filament {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
+
+## Line Formation -- $J_\nu$ {.smaller}
+
+![](static_assets/cocoplot_j.png){fig-align="center"}
+
+## Line Formation -- Contribution Function {.smaller}
+
+![](static_assets/cocoplot_ci.png){fig-align="center"}
+
+## Ionisation?? {.smaller}
+
+# Outlook
+
+## Outlook {.smaller}
+
+- Some concluding remarks
+- Viable route to non-LTE RMHD in realistic _complex_ models.
+
+
