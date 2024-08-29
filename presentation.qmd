@@ -18,13 +18,15 @@ format:
 ::: {.v-center-container}
 
 - Where are we now?
-- Radiance Cascades
-- Applications
+- Radiance Cascades ✨
+- Application
+- Outlook
 
 :::
 
 ## Promotion...
 
+![](static_assets/Abstract.png){fig-align="center"}
 
 ## Non-LTE Radiative Transfer {.smaller}
 
@@ -34,10 +36,11 @@ format:
 - Coupling between radiation field and atomic transitions.
 - Extremely computationally demanding, but necessary for many spectral lines.
 - Needed for models, diagnostics, and inversions.
+- Also, ionisation.
 :::
 
 ::: {.column width="50%"}
-<video loop data-autoplay src="HinodeProm.mp4" width="99%"></video>
+<video loop data-autoplay src="static_assets/HinodeProm.mp4" width="99%"></video>
 :::
 
 ::::
@@ -52,7 +55,7 @@ format:
 :::
 
 ::: {.column width="50%" .fragment}
-![](jk_atmos.png){style="max-width: 80%;"}
+![](static_assets/jk_atmos.png){style="max-width: 80%;"}
 
 [Jenkins & Keppens 2022]{.attrib}
 
@@ -84,7 +87,7 @@ format:
 
 ## Prominence Albedo
 
-![](JenkinsAlbedo.png){fig-align="center"}
+![](static_assets/JenkinsAlbedo.png){fig-align="center"}
 
 ::: {.horiz-center}
 [Jenkins+ 2024]{.attrib}
@@ -92,7 +95,13 @@ format:
 
 ## Ray Effects
 
+![](static_assets/ScRays.png){fig-align="center"}
+
 ## Desired Result
+
+![](static_assets/RcRays.png){fig-align="center"}
+
+# How do we build this?
 
 {{ PenumbraCriterion }}
 
@@ -123,7 +132,7 @@ with some small angles approximations...
 
 ::: {.column width="50%"}
 
-![](PenumbraCriterionFrame.png)
+![](static_assets/PenumbraCriterionFrame.png)
 
 :::
 ::::
@@ -164,11 +173,10 @@ t_i \propto 2^{\alpha i}
 
 ::: {.columns .v-center-container}
 ::: {.column}
-::: {.incremental}
 - This construction sparsely encodes the radiation field throughout the domain...
 - But not in a form we can use directly.
 - Solution:
-:::
+
 ::: {.fragment .horiz-center}
 <br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
 :::
@@ -180,7 +188,7 @@ t_i \propto 2^{\alpha i}
 ## Interpolated Ray Analysis {.smaller}
 
 - Each cascade $i+1$ has 1/2 the rays of cascade $i$ (denoted $N_{C_i}$)
-- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ ($[t_i, t_{i+1}]$).
+- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ $\left([t_i, t_{i+1}]\right)$.
 - Merging cascades 0 and 1:
 ```{=tex}
 \begin{cases}
@@ -200,7 +208,7 @@ t_i \propto 2^{\alpha i}
 :::
 
 ::: {.fragment style="color: var(--teal_c);"}
-Linear scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
+Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
 :::
 
 ## Applications
