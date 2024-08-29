@@ -7,7 +7,7 @@ HTML_SCENES := $(SCENE_NAMES:%=intermediate_html/%.html)
 GENERATED_ASSETS :=$(SCENE_NAMES:%=generated/%_assets)
 
 slides/%.json: %.py RadianceIntervals.py
-	$(PYTHON) -m manim_slides render  $< $*
+	$(PYTHON) -m manim_slides render -qk $< $*
 
 # -cdata_uri=true
 intermediate_html/%.html: slides/%.json

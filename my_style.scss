@@ -37,6 +37,19 @@ div.horiz-center {
     text-align: center;
 }
 
+section.smaller {
+    font-size: 0.6em !important;
+}
+
+.reveal .slides section .fragment.red-shift {
+    visibility: visible;
+    opacity: 1;
+}
+
+.reveal .slides section .fragment.visible.red-shift {
+    color: var(--red_b);
+}
+
 :root {
     --blue_a: #c7e9f1;
     --blue_b: #9cdceb;

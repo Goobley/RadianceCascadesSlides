@@ -23,6 +23,9 @@ format:
 
 :::
 
+## Promotion...
+
+
 ## Non-LTE Radiative Transfer {.smaller}
 
 :::: {.columns .v-center-container}
@@ -108,13 +111,13 @@ A < B,\\
 with some small angles approximations...
 ```{=tex}
 \begin{cases}
-\Delta_s < F(D) \propto D,\\
-\Delta_\omega < G(1/D) \propto 1/D.
+\Delta_s < F(D) \propto D\quad&\mathrm{(spatial)}\\
+\Delta_\omega < G(1/D) \propto 1/D\quad&\mathrm{(angular)}
 \end{cases}
 ```
 
-$\Delta_s$: spatial\
-$\Delta_\omega$: angular
+- We can exploit this!
+- Represent contributions from different shells separately.
 
 :::
 
@@ -125,10 +128,81 @@ $\Delta_\omega$: angular
 :::
 ::::
 
+{{ LongCharView }}
 
+{{ RcProbeNear }}
 
+{{ RcProbeFar }}
 
+## How do we use this? {.smaller}
 
-# New content
+::: {.columns .v-center-container}
+
+::: {.column}
+- Encode radiance field as a set of cascades, each describing $I_\nu$ in annuli around $\vec{p}$.
+- If penumbra criterion is satisfied, cascade is linearly interpolateable!
+- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, ($\alpha \geq 1)$:
+
+```{=tex}
+\begin{cases}
+\Delta_s \propto 2^i,\\
+\Delta_\omega \propto \cfrac{1}{2^{\alpha i}},\\
+t_i \propto 2^{\alpha i}
+\end{cases}
+```
+
+- Exponential scaling
+- A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval.
+- But what does these cascades look like?
+
+:::
+:::
+
+{{ ProbeGrid }}
+
+## Probe Interpolation {.smaller}
+
+::: {.columns .v-center-container}
+::: {.column}
+::: {.incremental}
+- This construction sparsely encodes the radiation field throughout the domain...
+- But not in a form we can use directly.
+- Solution:
+:::
+::: {.fragment .horiz-center}
+<br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
+:::
+:::
+:::
+
+{{ InterpolatedProbe }}
+
+## Interpolated Ray Analysis {.smaller}
+
+- Each cascade $i+1$ has 1/2 the rays of cascade $i$ (denoted $N_{C_i}$)
+- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ ($[t_i, t_{i+1}]$).
+- Merging cascades 0 and 1:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = N_{C_0} + N_{C_1} = N_{C_0} + \cfrac{N_{C_0}}{2},\\
+\text{Rays constructed} = 2N_{C_0}.
+\end{cases}
+```
+
+::: {.fragment}
+- In general:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = \sum_I N_{C_i} = \left(1 + \cfrac{1}{2} + \cdots + \cfrac{1}{2^I} \right) < 2N_{C_0},\\
+\text{Rays constructed} = 2^I N_{C_0}.
+\end{cases}
+```
+:::
+
+::: {.fragment style="color: var(--teal_c);"}
+Linear scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
+:::
+
+## Applications
 
 - Blah

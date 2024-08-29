@@ -17,7 +17,7 @@ class PenumbraCriterion(Slide):
         blocker_a = np.array([LEFT_EDGE, blocker_y, 0.0])
         blocker_b = np.array([0.0, blocker_y, 0.0])
         light_colour = mn.PURPLE_A
-        gamma = 2.8
+        gamma = 2.2
         a_plane_y = 1.0
         b_plane_y = -2.0
 
