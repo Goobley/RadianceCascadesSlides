@@ -39,6 +39,17 @@ webp_dist: presentation.html
 	cp -r static_assets webp_dist
 	cd webp_dist/static_assets; bash ./convert_png_webp.sh; rm *.png
 
+# Squatting on /docs for easy integration with gh-pages
+.PHONY: deploy
+deploy: dist
+	rm -rf docs
+	cp -r dist docs
+
+.PHONY: webp_deploy
+webp_deploy: webp_dist
+	rm -rf docs
+	cp -r webp_dist docs
+
 # Preserve the intermediate outputs
 all_slides: $(JSON_SCENES)
 all_html: $(HTML_SCENES)
