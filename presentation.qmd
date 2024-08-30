@@ -257,7 +257,7 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 ::: {.column width=50%}
 ### _DexRT_
 - Harder to use C++ fixed-function tool [for HPC]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
-- 2D radiance cascades [🔜3D]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
+- 2D radiance cascades [🔜 3D]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
 - Same-transition preconditioned MALI
 - [🔜]{.fragment .fade-in data-fragment-index="0"} [Mildly-]{.fragment .fade-out data-fragment-index="0"}optimised GPU architecture
 - [🔜]{.fragment .fade-in data-fragment-index="0"} [No]{.fragment .fade-out data-fragment-index="0"} partial frequency redistribution effects
@@ -300,7 +300,7 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 
 ::: {.horiz-center}
 
-<video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" height="80%" style="max-width: 80%;"></video>
+<video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;"></video>
 
 :::
 
@@ -308,7 +308,7 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 
 ::: {.horiz-center}
 
-<video controls loop data-autoplay src="static_assets/H_I_102.57_nm.mp4" height="80%" style="max-width: 80%;"></video>
+<video controls loop data-autoplay src="static_assets/H_I_102.57_nm.mp4" style="max-width: 80%;"></video>
 
 :::
 
