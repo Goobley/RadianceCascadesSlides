@@ -11,12 +11,13 @@ format:
     theme: [night, my_style.scss]
     progress: false
     html-math-method: katex
+    title-slide-attributes:
+      data-background-image: static_assets/CombinedLogosWhite.png
+      data-background-size: 25%
+      data-background-position: 2% 2%
 ---
 
 <!-- TODO
-- Some other complex atmospheres, muram, bifrost
-- ionisation
-- add logos
 - Concluding remarks -->
 
 ## Contents
@@ -72,9 +73,15 @@ format:
 :::
 
 ::: {.fragment .current-visible}
-![](static_assets/PenumbraCriterionFrame.png){style="max-width: 80%;"}
+![](static_assets/CarlssonModel.png){style="max-width: 80%;"}
 
-[TODO: Get some more things]{.attrib}
+[Carlsson+ 2016]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/PrzybylskiTemp.png){style="max-width: 80%;"}
+
+[Przybylski+ 2022]{.attrib}
 :::
 
 :::
@@ -288,13 +295,32 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 
 ![](static_assets/cocoplot_ci.png){fig-align="center"}
 
-## Ionisation?? {.smaller}
+## Ionisation Fraction {.smaller}
+
+![](static_assets/jk20200550_ionisation.png){fig-align="center"}
 
 # Outlook
 
 ## Outlook {.smaller}
 
+:::: {.columns .v-center-container}
+
+::: {.column width=80%}
 - Some concluding remarks
 - Viable route to non-LTE RMHD in realistic _complex_ models.
+- More Points
+- More Points
+- More Points
+- More Points
+- More Points
+- Another thing
+<br/><br/>Thanks!
+:::
 
+::: {.column width=20%}
+![Preprint](static_assets/preprint_qr.png)
+[Preprint]{.attrib}
+:::
+
+::::
 
