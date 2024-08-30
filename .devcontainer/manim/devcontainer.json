@@ -19,16 +19,15 @@
 	// "postCreateCommand": "cat /etc/os-release",
 
 	// Configure tool-specific properties.
-	// "customizations": {
-	// 	"vscode": {
-	// 		"extensions": [
-    //             "ms-vscode.cmake-tools",
-    //             "ms-vscode.cpptools",
-	// 			"ms-vscode.cpptools-extension-pack",
-	// 			"streetsidesoftware.code-spell-checker"
-	// 		]
-	// 	}
-	// },
+	"customizations": {
+		"vscode": {
+			"extensions": [
+                "quarto.quarto",
+				"ms-python.python",
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	},
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
 	"updateRemoteUserUID": true,

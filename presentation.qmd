@@ -15,10 +15,8 @@ format:
       data-background-image: static_assets/CombinedLogosWhite.png
       data-background-size: 25%
       data-background-position: 2% 2%
+    controls: true
 ---
-
-<!-- TODO
-- Concluding remarks -->
 
 ## Contents
 
@@ -180,7 +178,7 @@ with some small angles approximations...
 ::: {.column}
 - Encode radiance field as a set of cascades, each describing $I_\nu$ in annuli around $\vec{p}$.
 - If penumbra criterion is satisfied, cascade is linearly interpolateable!
-- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, ($\alpha \geq 1)$:
+- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, $\alpha \geq 1$:
 
 ```{=tex}
 \begin{cases}
@@ -241,6 +239,32 @@ t_i \propto 2^{\alpha i}
 Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
 :::
 
+## Implementation {.smaller}
+
+<br/>
+
+:::: {.columns}
+::: {.column width=50%}
+### _Lightweaver_
+- Easy to use Python framework
+- 1/1.5/2D short characteristics
+- Fully preconditioned MALI
+- Heavily-optimised CPU architecture
+- Partial frequency redistribution effects
+- Charge conservation
+:::
+
+::: {.column width=50%}
+### _DexRT_
+- Harder to use C++ fixed-function tool [for HPC]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
+- 2D radiance cascades [🔜3D]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
+- Same-transition preconditioned MALI
+- [🔜]{.fragment .fade-in data-fragment-index="0"} [Mildly-]{.fragment .fade-out data-fragment-index="0"}optimised GPU architecture
+- [🔜]{.fragment .fade-in data-fragment-index="0"} [No]{.fragment .fade-out data-fragment-index="0"} partial frequency redistribution effects
+- Charge conservation
+:::
+::::
+
 # Application
 
 ## Application {.smaller}
@@ -258,8 +282,17 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 ![](static_assets/jk20200550_params.png){fig-align="center"}
 
 ::: {.attrib}
+:::: {.columns}
+::: {.column width=50%}
 - 5.7 km resolution!
 - 3072 x 2048
+:::
+::: {.column width=50%}
+- 5+1 level H
+- 5+1 level Ca ɪɪ
+- Charge & pressure conservation
+:::
+::::
 :::
 
 
@@ -306,19 +339,21 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 :::: {.columns .v-center-container}
 
 ::: {.column width=80%}
-- Some concluding remarks
-- Viable route to non-LTE RMHD in realistic _complex_ models.
-- More Points
-- More Points
-- More Points
-- More Points
-- More Points
-- Another thing
-<br/><br/>Thanks!
+- Radiative transfer effects are necessary for realistic solar models
+  - Observational interpretation
+  - Model synthesis
+  - Ionisation effects
+- Radiance cascades present viable route to non-LTE RMHD
+- GPUs are really powerful...
+
+<br/><br/>
+[Thanks!]{style="color: var(--teal_c);"}
+
+[Christopher.Osborne@glasgow.ac.uk](mailto:christopher.osborne@glasgow.ac.uk)
 :::
 
 ::: {.column width=20%}
-![Preprint](static_assets/preprint_qr.png)
+[![Preprint](static_assets/preprint_qr.png)](https://arxiv.org/abs/2408.14425)
 [Preprint]{.attrib}
 :::
 

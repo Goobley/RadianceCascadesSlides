@@ -6,7 +6,7 @@ JSON_SCENES := $(SCENE_NAMES:%=slides/%.json)
 HTML_SCENES := $(SCENE_NAMES:%=intermediate_html/%.html)
 GENERATED_ASSETS :=$(SCENE_NAMES:%=generated/%_assets)
 
-slides/%.json: %.py RadianceIntervals.py
+slides/%.json: %.py RadianceIntervals.py manim.cfg
 	$(PYTHON) -m manim_slides render -qk $< $*
 
 # -cdata_uri=true

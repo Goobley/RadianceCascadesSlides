@@ -3,8 +3,6 @@ import manim as mn
 from manim_slides import Slide
 import numpy as np
 
-mn.config.background_color = "#111111"
-
 LEFT_EDGE = -4.0
 RIGHT_EDGE = 4.0
 IM_RES = 2000

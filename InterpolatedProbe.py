@@ -3,8 +3,6 @@ import manim as mn
 from manim_slides import Slide
 import numpy as np
 
-mn.config.background_color = "#111111"
-
 PROBE0_LENGTH = 0.5
 PROBE0_NUM_RAYS = 4
 MAX_LEVEL = 3
