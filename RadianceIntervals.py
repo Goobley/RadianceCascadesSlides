@@ -82,6 +82,10 @@ class ProbeView(Slide):
 
         if self.overdraw_annulus:
             self.play(mn.Write(ann))
+            # Extend the video length to fix the keyframe
+            hack_line = mn.Line([-7, 0, 0], [-7, 1, 0], color=mn.config.background_color)
+            self.play(mn.Create(hack_line))
+            self.wait()
 
         self.next_slide()
 
@@ -126,7 +130,7 @@ class ProbeView(Slide):
             )
 
             if theta1 != PROBE_START_ANGLE:
-                self.play(mn.Write(line1))
+                self.play(mn.Write(line1), run_time=0.5)
 
             if p_idx == -1:
                 continue
@@ -138,118 +142,6 @@ class ProbeView(Slide):
                     radius=PROBE_RADIUS,
                     stroke_width=8,
                 )
-            self.play(mn.Write(inner_arc))
+            self.play(mn.Write(inner_arc), run_time=0.5)
 
         self.wait()
-
-
-# class RcPresentationTitle(Slide):
-#     def construct(self):
-#         title = mn.VGroup(
-#             mn.Text("Towards the Next Generation"),
-#             mn.Text("of Radiative Transfer Models:"),
-#             mn.Text("Radiance Cascades", color=mn.TEAL).scale(0.8),
-#         ).arrange(mn.DOWN).shift(mn.UP)
-#         author = mn.VGroup(
-#             mn.Text("Chris Osborne").scale(0.8),
-#             mn.Text("University of Glasgow").scale(0.6),
-#         ).arrange(mn.DOWN).next_to(title, 4 * mn.DOWN)
-#         self.add(title)
-#         self.add(author)
-#         self.wait()
-
-# %%manim_slides -v WARNING --progress_bar None RcPresentationTitle --manim-slides controls=true
-# https://github.com/jeertmans/jeertmans.github.io/tree/main/_slides/2023-12-07-confirmation/main.py
-
-class Item:
-    def __init__(self, initial=1):
-        self.value = initial
-
-    def __repr__(self):
-        s = repr(self.value)
-        self.value += 1
-        return s
-
-
-def paragraph(*strs, alignment=LEFT, direction=DOWN, **kwargs):
-    texts = VGroup(*[Text(s, **kwargs) for s in strs]).arrange(direction)
-
-    if len(strs) > 1:
-        for text in texts[1:]:
-            text.align_to(texts[0], direction=alignment)
-
-    return texts
-
-class RcPresentationTitle(Slide):
-
-    def next_slide_title_anim(self, title):
-        return Transform(
-            self.slide_title,
-            Text(title, color=mn.WHITE, font_size=36)
-            .move_to(self.slide_title)
-            .align_to(self.slide_title, mn.LEFT),
-        )
-
-    # Slides new slide and contents in
-    def new_slide(self, title, contents=None):
-        if self.mobjects_without_canvas:
-            self.play(
-                self.next_slide_title_anim(title),
-                self.wipe(
-                    self.mobjects_without_canvas,
-                    contents if contents else [],
-                    return_animation=True,
-                ),
-            )
-        else:
-            self.play(
-                self.next_slide_title_anim(title),
-            )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.slide_title = mn.Text(
-            "Contents", color=mn.WHITE, font_size=36
-        ).to_corner(UL)
-        self.add_to_canvas(slide_title=self.slide_title)
-
-    def construct(self):
-        title = mn.VGroup(
-            mn.Text("Towards the Next Generation"),
-            mn.Text("of Radiative Transfer Models:"),
-            mn.Text("Radiance Cascades", color=mn.TEAL).scale(0.8),
-        ).arrange(mn.DOWN).shift(mn.UP)
-        author = mn.VGroup(
-            mn.Text("Chris Osborne").scale(0.8),
-            mn.Text("University of Glasgow").scale(0.6),
-        ).arrange(mn.DOWN).next_to(title, 4 * mn.DOWN)
-        self.add(title)
-        self.add(author)
-        self.wait()
-
-        self.next_slide()
-        i = Item()
-        contents = paragraph(
-            f"{i}. Where are we at?",
-            f"{i}. What is wrong in RT?",
-            f"{i}. How do we fix this?",
-            f"{i}. Radiance Cascades",
-            f"{i}. Applications",
-            f"{i}. Conclusion",
-            color=mn.WHITE,
-            font_size=24,
-        ).align_to(self.slide_title, LEFT)
-        self.wipe(self.mobjects_without_canvas, [*self.canvas_mobjects, contents])
-
-        next_bit = paragraph(
-        "Some info",
-        "But this isn't good enough",
-        color=mn.WHITE,
-        font_size=24
-        )
-        self.next_slide()
-        self.new_slide("What's happening?", next_bit)
-
-# python -m manim_slides render RadianceIntervals.py LongCharView RcProbeNear RcProbeFar
-# python -m manim_slides convert LongCharView RcProbeNear RcProbeFar test.html -ccontrols=true -cslide_number=true

@@ -38,6 +38,9 @@ class ProbeGrid(Slide):
                         level_set.append(seg)
 
             cascade = mn.VGroup(*level_set)
-            self.play(mn.Write(cascade))
+            if level == MAX_LEVEL:
+                self.play(mn.Write(cascade), run_time=0.5)
+            else:
+                self.play(mn.Write(cascade))
             self.next_slide()
             start_radius = radius

@@ -74,7 +74,7 @@ class InterpolatedProbe(Slide):
 
         # NOTE(cmo): Remove highlight
         self.play(*[mn.Uncreate(x) for x in highlit_segs])
-        self.wait()
+        self.wait(0.25)
         # NOTE(cmo): Highlight quadrant
         for level in range(MAX_LEVEL+1):
             radius = PROBE0_LENGTH * (1 << (level * BRANCHING))
@@ -118,6 +118,6 @@ class InterpolatedProbe(Slide):
                 paths.append(path)
 
             self.play(*[mn.Write(path) for path in paths], run_time=0.5)
-            self.wait(0.5)
+            self.wait(0.25)
 
         self.next_slide()
