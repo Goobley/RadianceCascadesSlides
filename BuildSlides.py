@@ -14,7 +14,7 @@ if __name__ == "__main__":
             ani_data = [c.attrs["data-background-video"] for c in ani_soup.find("div", class_="slides").contents]
             if not EMBEDDED:
                 ani_data = ["generated/" + x for x in ani_data]
-            ani_slides = "\n\n".join([f"## {{background-video=\"{d}\" background-size=\"contain\"}}" for d in ani_data])
+            ani_slides = "\n\n".join([f"## {{background-video=\"{d}\" background-size=\"contain\" background-video-muted=\"true\"}}" for d in ani_data])
             animations[ani] = str(ani_slides)
             # ani_data = ''.join([str(c) for c in ani_soup.find("div", class_="slides").contents])
             # animations[ani] = str(ani_data)
