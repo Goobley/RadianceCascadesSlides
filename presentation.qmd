@@ -265,6 +265,38 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 :::
 ::::
 
+## Machine Learning {.smaller}
+
+::: {.columns}
+
+<br/>
+
+Myriad uses for hybrid models
+
+<br/>
+
+::: {.fragment data-fragment-index="0"}
+1. Efficient wavelength integrals for $\bar{J}$, see Dias Baso+ 2023.
+:::
+
+::: {.fragment data-fragment-index="1"}
+2. Direct evaluation of PRD scattering integral from $J$ and velocity field, similar to hybrid treatment of Leenaarts+ 2012?
+:::
+
+::: {.fragment data-fragment-index="2"}
+3. Initial guess at departure coefficients from atmospheric structure, see Vicente Arévalo+ 2022.
+:::
+
+<br/>
+
+::: {.fragment data-fragment-index="2"}
+
+I want to work on any and all of these!
+
+:::
+
+:::
+
 # Application
 
 ## Application {.smaller}
@@ -320,13 +352,13 @@ Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scal
 
 ![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
 
-## Line Formation -- $J_\nu$ {.smaller}
-
-![](static_assets/cocoplot_j.png){fig-align="center"}
-
 ## Line Formation -- Contribution Function {.smaller}
 
 ![](static_assets/cocoplot_ci.png){fig-align="center"}
+
+## Line Formation -- $J_\nu$ {.smaller}
+
+![](static_assets/cocoplot_j.png){fig-align="center"}
 
 ## Ionisation Fraction {.smaller}
 
