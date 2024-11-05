@@ -239,6 +239,35 @@ t_i \propto 2^{\alpha i}
 Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
 :::
 
+## Interpolated Ray Analysis cont'd {.smaller}
+
+- For a branching factor $\alpha=2$ in 2D
+- Each cascade has the same number of rays.
+- Merging cascades 0 and 1:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = N_{C_0} + N_{C_1} = 2N_{C_0},\\
+\text{Rays constructed} = 4N_{C_0}.
+\end{cases}
+```
+
+::: {.fragment}
+- In general:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = \sum_I N_{C_i} = I N_{C_0},\\
+\text{Rays constructed} = 2^{2I} N_{C_0}.
+\end{cases}
+```
+:::
+
+::: {.fragment style="color: var(--teal_c);"}
+Linear scaling in compute, exponential scaling in constructed rays!
+:::
+::: {.fragment style="color: var(--teal_c);"}
+Somewhat better apparent quality (small angle approximation)
+:::
+
 ## Implementation {.smaller}
 
 <br/>
@@ -287,15 +316,11 @@ Myriad uses for hybrid models
 3. Initial guess at departure coefficients from atmospheric structure, see Vicente Arévalo+ 2022.
 :::
 
-<br/>
-
-::: {.fragment data-fragment-index="2"}
-
-I want to work on any and all of these!
-
 :::
 
-:::
+## Playtime {.smaller}
+
+<iframe data-src="./rc-demo.html" width=800 height=600></iframe>
 
 # Application
 
@@ -344,6 +369,10 @@ I want to work on any and all of these!
 
 :::
 
+## Short Characteristics Comparison
+
+![](static_assets/jk20200550_RcvsSc.png){fig-align="center"}
+
 ## 1.5D Comparison -- Prominence {.smaller}
 
 ![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
@@ -376,6 +405,7 @@ I want to work on any and all of these!
   - Model synthesis
   - Ionisation effects
 - Radiance cascades present viable route to non-LTE RMHD
+- And also to enhance radiation treatment across astrophysics
 - GPUs are really powerful...
 
 <br/><br/>

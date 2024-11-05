@@ -29,6 +29,7 @@ dist: presentation.html
 	cp -r generated dist
 	cp -r static_assets dist
 	cp -r presentation_temp_files dist
+	cp rc-demo.html dist/rc-demo.html
 
 webp_dist: presentation.html
 	mkdir -p webp_dist
@@ -37,6 +38,7 @@ webp_dist: presentation.html
 	cp -r generated webp_dist
 	cp -r presentation_temp_files webp_dist
 	cp -r static_assets webp_dist
+	cp rc-demo.html webp_dist/rc-demo.html
 	cd webp_dist/static_assets; bash ./convert_png_webp.sh; rm *.png
 
 # Squatting on /docs for easy integration with gh-pages
