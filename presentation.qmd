@@ -1,13 +1,13 @@
 ---
-title: '[Towards the Next Generation<br/>of Radiative Transfer Models:]{.r-fit-text}'
-subtitle: '[Radiance Cascades]{style="color: var(--teal_c);"}'
+title: '[Next Generation Non-LTE<br/>Radiative Transfer:]{.r-fit-text}'
+subtitle: '[DexRT]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
 format:
   revealjs:
     slide-number: true
-    footer: "Radiance Cascades"
+    footer: "Radiance Cascades: DexRT"
     theme: [night, my_style.scss]
     progress: false
     html-math-method: katex
@@ -17,21 +17,6 @@ format:
       data-background-position: 2% 2%
     controls: true
 ---
-
-## Contents
-
-::: {.v-center-container}
-
-- Where are we now?
-- Radiance Cascades ✨
-- Application
-- Outlook
-
-:::
-
-## Promotion...
-
-![](static_assets/Abstract.png){fig-align="center"}
 
 ## Non-LTE Radiative Transfer {.smaller}
 
@@ -46,46 +31,11 @@ format:
 
 ::: {.column width="50%"}
 <video loop data-autoplay src="static_assets/HinodeProm.mp4" width="99%"></video>
+
+[HINODE BFI]{.attrib}
 :::
 
 ::::
-
-## Non-LTE Radiative Transfer {.smaller}
-
-:::: {.columns .v-center-container}
-
-::: {.column width="50%"}
-- RT codes designed around the idea of smooth atmospheres...
-
-::: {.incremental}
-- But ours look like this
-:::
-:::
-
-::: {.column width="50%" .r-stack}
-
-::: {.fragment .current-visible}
-![](static_assets/jk_atmos.png){style="max-width: 80%;"}
-
-[Jenkins & Keppens 2021]{.attrib}
-:::
-
-::: {.fragment .current-visible}
-![](static_assets/CarlssonModel.png){style="max-width: 80%;"}
-
-[Carlsson+ 2016]{.attrib}
-:::
-
-::: {.fragment .current-visible}
-![](static_assets/PrzybylskiTemp.png){style="max-width: 80%;"}
-
-[Przybylski+ 2022]{.attrib}
-:::
-
-:::
-
-::::
-
 
 ## Most Important Quantities {.smaller}
 
@@ -113,13 +63,47 @@ format:
 
 :::
 
-## Prominence Albedo
+## Non-LTE Radiative Transfer {.smaller}
 
-![](static_assets/JenkinsAlbedo.png){fig-align="center"}
+:::: {.columns .v-center-container}
 
-::: {.horiz-center}
-[Jenkins+ 2024]{.attrib}
+::: {.column width="50%"}
+- 1.5D RT treats columns independently.
+
+- More importantly, as having infinite extent in the horizontal plane.
+
+::: {.incremental}
+- 2+D RT codes designed around the idea of smooth atmospheres...
 :::
+
+::: {.incremental}
+- But ours look like this:
+:::
+:::
+
+::: {.column width="50%" .r-stack}
+
+::: {.fragment .current-visible}
+![](static_assets/jk_atmos.png){style="max-width: 80%;"}
+
+[Jenkins & Keppens 2021]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/CarlssonModel.png){style="max-width: 80%;"}
+
+[Carlsson+ 2016]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/PrzybylskiTemp.png){style="max-width: 80%;"}
+
+[Przybylski+ 2022]{.attrib}
+:::
+
+:::
+
+::::
 
 ## Ray Effects
 
@@ -131,9 +115,12 @@ format:
 
 # How do we build this?
 
+- Where else is light transport solved?
+  - Physically Based Rendering
+
 {{ PenumbraCriterion }}
 
-## Observations {.smaller}
+## Penumbra Criterion {.smaller}
 
 :::: {.columns .v-center-container}
 
@@ -165,32 +152,16 @@ with some small angles approximations...
 :::
 ::::
 
-{{ LongCharView }}
-
-{{ RcProbeNear }}
-
-{{ RcProbeFar }}
-
 ## How do we use this? {.smaller}
 
 ::: {.columns .v-center-container}
 
 ::: {.column}
 - Encode radiance field as a set of cascades, each describing $I_\nu$ in annuli around $\vec{p}$.
-- If penumbra criterion is satisfied, cascade is linearly interpolateable!
-- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, $\alpha \geq 1$:
-
-```{=tex}
-\begin{cases}
-\Delta_s \propto 2^i,\\
-\Delta_\omega \propto \cfrac{1}{2^{\alpha i}},\\
-t_i \propto 2^{\alpha i}
-\end{cases}
-```
-
-- Exponential scaling
-- A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval.
-- But what does these cascades look like?
+<!-- - If penumbra criterion is satisfied, cascade is linearly interpolateable! -->
+- Exponential scaling of annulus width and angular sampling.
+<!-- - A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval. -->
+- But what do these cascades look like?
 
 :::
 :::
@@ -205,135 +176,35 @@ t_i \propto 2^{\alpha i}
 - But not in a form we can use directly.
 - Solution:
 
-::: {.fragment .horiz-center}
+::: {.horiz-center}
 <br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
 :::
 :::
 :::
 
-{{ InterpolatedProbe }}
+## Tower of Optimisations
 
-## Interpolated Ray Analysis {.smaller}
+- Mipmaps (with adaptive error bounds)
 
-- Each cascade $i+1$ has 1/2 the rays of cascade $i$ (denoted $N_{C_i}$)
-- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ $\left([t_i, t_{i+1}]\right)$.
-- Merging cascades 0 and 1:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = N_{C_0} + \cfrac{N_{C_0}}{2},\\
-\text{Rays constructed} = 2N_{C_0}.
-\end{cases}
-```
+- MIPMAP PICTURE
 
-::: {.fragment}
-- In general:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = \left(1 + \cfrac{1}{2} + \cdots + \cfrac{1}{2^I} \right) < 2N_{C_0},\\
-\text{Rays constructed} = 2^I N_{C_0}.
-\end{cases}
-```
-:::
+- Sparsity and Cache-friendliness
 
-::: {.fragment style="color: var(--teal_c);"}
-Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
-:::
+- SPARSITY PICTURE
 
-## Interpolated Ray Analysis cont'd {.smaller}
-
-- For a branching factor $\alpha=2$ in 2D
-- Each cascade has the same number of rays.
-- Merging cascades 0 and 1:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = 2N_{C_0},\\
-\text{Rays constructed} = 4N_{C_0}.
-\end{cases}
-```
-
-::: {.fragment}
-- In general:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = I N_{C_0},\\
-\text{Rays constructed} = 2^{2I} N_{C_0}.
-\end{cases}
-```
-:::
-
-::: {.fragment style="color: var(--teal_c);"}
-Linear scaling in compute, exponential scaling in constructed rays!
-:::
-::: {.fragment style="color: var(--teal_c);"}
-Somewhat better apparent quality (small angle approximation)
-:::
-
-## Implementation {.smaller}
-
-<br/>
-
-:::: {.columns}
-::: {.column width=50%}
-### _Lightweaver_
-- Easy to use Python framework
-- 1/1.5/2D short characteristics
-- Fully preconditioned MALI
-- Heavily-optimised CPU architecture
-- Partial frequency redistribution effects
-- Charge conservation
-:::
-
-::: {.column width=50%}
-### _DexRT_
-- Harder to use C++ fixed-function tool [for HPC]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
-- 2D radiance cascades [🔜 3D]{.fragment .fade-in data-fragment-index="0" style="color: var(--teal_c);"}
-- Same-transition preconditioned MALI
-- [🔜]{.fragment .fade-in data-fragment-index="0"} [Mildly-]{.fragment .fade-out data-fragment-index="0"}optimised GPU architecture
-- [🔜]{.fragment .fade-in data-fragment-index="0"} [No]{.fragment .fade-out data-fragment-index="0"} partial frequency redistribution effects
-- Charge conservation
-:::
-::::
-
-## Machine Learning {.smaller}
-
-::: {.columns}
-
-<br/>
-
-Myriad uses for hybrid models
-
-<br/>
-
-::: {.fragment data-fragment-index="0"}
-1. Efficient wavelength integrals for $\bar{J}$, see Dias Baso+ 2023.
-:::
-
-::: {.fragment data-fragment-index="1"}
-2. Direct evaluation of PRD scattering integral from $J$ and velocity field, similar to hybrid treatment of Leenaarts+ 2012?
-:::
-
-::: {.fragment data-fragment-index="2"}
-3. Initial guess at departure coefficients from atmospheric structure, see Vicente Arévalo+ 2022.
-:::
-
-:::
-
-## Playtime {.smaller}
-
-<iframe data-src="./rc-demo.html" width=800 height=600></iframe>
 
 # Application
 
-## Application {.smaller}
+<!-- ## Application {.smaller}
 
 ::: {.horiz-center}
 ::: {}
 <video controls loop data-autoplay src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;"></video>
 :::
 [Jenkins & Keppens 2021]{.attrib}
-:::
+::: -->
 
-## In particular... {.smaller}
+## Setup {.smaller}
 
 <br/><br/>
 ![](static_assets/jk20200550_params.png){fig-align="center"}
@@ -353,13 +224,13 @@ Myriad uses for hybrid models
 :::
 
 
-## Spectra -- Ca ɪɪ K {.smaller}
+<!-- ## Spectra -- Ca ɪɪ K {.smaller}
 
 ::: {.horiz-center}
 
 <video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;"></video>
 
-:::
+::: -->
 
 ## Spectra -- Ly β {.smaller}
 
@@ -369,29 +240,13 @@ Myriad uses for hybrid models
 
 :::
 
-## Short Characteristics Comparison
-
-![](static_assets/jk20200550_RcvsSc.png){fig-align="center"}
-
-## 1.5D Comparison -- Prominence {.smaller}
-
-![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
-
-## 1.5D Comparison -- Filament {.smaller}
-
-![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
-
-## Line Formation -- Contribution Function {.smaller}
-
-![](static_assets/cocoplot_ci.png){fig-align="center"}
-
-## Line Formation -- $J_\nu$ {.smaller}
-
-![](static_assets/cocoplot_j.png){fig-align="center"}
-
 ## Ionisation Fraction {.smaller}
 
 ![](static_assets/jk20200550_ionisation.png){fig-align="center"}
+
+## Sneak Peak {.smaller}
+
+![](static_assets/K_core_0089.png){fig-align="center"}
 
 # Outlook
 
@@ -405,8 +260,9 @@ Myriad uses for hybrid models
   - Model synthesis
   - Ionisation effects
 - Radiance cascades present viable route to non-LTE RMHD
+  - SAMS Project
 - And also to enhance radiation treatment across astrophysics
-- GPUs are really powerful...
+- GPUs are really powerful, and graphics programming has lots to offer us
 
 <br/><br/>
 [Thanks!]{style="color: var(--teal_c);"}
@@ -415,8 +271,8 @@ Myriad uses for hybrid models
 :::
 
 ::: {.column width=20%}
-[![Preprint](static_assets/preprint_qr.png)](https://arxiv.org/abs/2408.14425)
-[Preprint]{.attrib}
+[![Preprint](static_assets/final_rc_qr.png)](https://doi.org/10.1093/rasti/rzae062)
+[Paper]{.attrib}
 :::
 
 ::::
