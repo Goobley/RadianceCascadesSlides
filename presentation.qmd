@@ -182,15 +182,16 @@ with some small angles approximations...
 :::
 :::
 
-## Tower of Optimisations
+## Tower of Optimisations {.smaller}
 
-- Mipmaps (with adaptive error bounds)
+<br/>
 
-- MIPMAP PICTURE
+- Sparsity and cache-friendliness
+- Lower resolution proxies for distant rays: mipmaps with directionality and adaptive error bounds
 
-- Sparsity and Cache-friendliness
+![](static_assets/mips.png){fig-align="center"}
 
-- SPARSITY PICTURE
+
 
 
 # Application
@@ -246,9 +247,7 @@ with some small angles approximations...
 
 ## Sneak Peak {.smaller}
 
-![](static_assets/K_core_0089.png){fig-align="center"}
-
-# Outlook
+![](static_assets/K_core_0056.png){fig-align="center"}
 
 ## Outlook {.smaller}
 
