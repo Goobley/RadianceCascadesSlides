@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.56">
 
   <meta name="author" content="Chris Osborne">
-  <title>Towards the Next Generation of Radiative Transfer Models:</title>
+  <title>Next Generation Non-LTE Radiative Transfer:</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -342,8 +342,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="static_assets/CombinedLogosWhite.webp" data-background-position="2% 2%" data-background-size="25%" class="quarto-title-block center">
-  <h1 class="title"><span class="r-fit-text">Towards the Next Generation<br>of Radiative Transfer Models:</span></h1>
-  <p class="subtitle"><span style="color: var(--teal_c);">Radiance Cascades</span></p>
+  <h1 class="title"><span class="r-fit-text">Next Generation Non-LTE<br>Radiative Transfer:</span></h1>
+  <p class="subtitle"><span style="color: var(--teal_c);">DexRT</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -357,21 +357,6 @@ Chris Osborne
 </div>
 
 </section>
-<section id="contents" class="slide level2">
-<h2>Contents</h2>
-<div class="v-center-container">
-<ul>
-<li>Where are we now?</li>
-<li>Radiance Cascades ✨</li>
-<li>Application</li>
-<li>Outlook</li>
-</ul>
-</div>
-</section>
-<section id="promotion" class="slide level2">
-<h2>Promotion…</h2>
-
-<img data-src="static_assets/Abstract.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="non-lte-radiative-transfer" class="slide level2 smaller">
 <h2>Non-LTE Radiative Transfer</h2>
 <div class="columns v-center-container">
@@ -385,33 +370,7 @@ Chris Osborne
 </div><div class="column" style="width:50%;">
 <video loop="" data-autoplay="" src="static_assets/HinodeProm.mp4" width="99%">
 </video>
-</div></div>
-</section>
-<section id="non-lte-radiative-transfer-1" class="slide level2 smaller">
-<h2>Non-LTE Radiative Transfer</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
-<ul>
-<li>RT codes designed around the idea of smooth atmospheres…</li>
-</ul>
-<div>
-<ul>
-<li class="fragment">But ours look like this</li>
-</ul>
-</div>
-</div><div class="column r-stack" style="width:50%;">
-<div class="fragment current-visible">
-<p><img data-src="static_assets/jk_atmos.webp" style="max-width: 80%;"></p>
-<p><span class="attrib">Jenkins &amp; Keppens 2021</span></p>
-</div>
-<div class="fragment current-visible">
-<p><img data-src="static_assets/CarlssonModel.webp" style="max-width: 80%;"></p>
-<p><span class="attrib">Carlsson+ 2016</span></p>
-</div>
-<div class="fragment current-visible">
-<p><img data-src="static_assets/PrzybylskiTemp.webp" style="max-width: 80%;"></p>
-<p><span class="attrib">Przybylski+ 2022</span></p>
-</div>
+<p><span class="attrib">HINODE BFI</span></p>
 </div></div>
 </section>
 <section id="most-important-quantities" class="slide level2 smaller">
@@ -435,12 +394,38 @@ Chris Osborne
 </div>
 </div></div>
 </section>
-<section id="prominence-albedo" class="slide level2">
-<h2>Prominence Albedo</h2>
-
-<img data-src="static_assets/JenkinsAlbedo.webp" class="quarto-figure quarto-figure-center r-stretch"><div class="horiz-center">
-<p><span class="attrib">Jenkins+ 2024</span></p>
+<section id="non-lte-radiative-transfer-1" class="slide level2 smaller">
+<h2>Non-LTE Radiative Transfer</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>1.5D RT treats columns independently.</p></li>
+<li><p>More importantly, as having infinite extent in the horizontal plane.</p></li>
+</ul>
+<div>
+<ul>
+<li class="fragment">2+D RT codes designed around the idea of smooth atmospheres…</li>
+</ul>
 </div>
+<div>
+<ul>
+<li class="fragment">But ours look like this:</li>
+</ul>
+</div>
+</div><div class="column r-stack" style="width:50%;">
+<div class="fragment current-visible">
+<p><img data-src="static_assets/jk_atmos.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Jenkins &amp; Keppens 2021</span></p>
+</div>
+<div class="fragment current-visible">
+<p><img data-src="static_assets/CarlssonModel.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Carlsson+ 2016</span></p>
+</div>
+<div class="fragment current-visible">
+<p><img data-src="static_assets/PrzybylskiTemp.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Przybylski+ 2022</span></p>
+</div>
+</div></div>
 </section>
 <section id="ray-effects" class="slide level2">
 <h2>Ray Effects</h2>
@@ -453,7 +438,12 @@ Chris Osborne
 <section>
 <section id="how-do-we-build-this" class="title-slide slide level1 center">
 <h1>How do we build this?</h1>
-
+<ul>
+<li>Where else is light transport solved?
+<ul>
+<li>Physically Based Rendering</li>
+</ul></li>
+</ul>
 </section>
 <section id="section" class="slide level2" data-background-video="generated/PenumbraCriterion_assets/84db8a11728a2d64ad227f293574b8f30f7a646c77a3943451ce7344866b04c7.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
@@ -467,8 +457,8 @@ Chris Osborne
 <section id="section-3" class="slide level2" data-background-video="generated/PenumbraCriterion_assets/092a42fcd5dd39a6a7a16ff05328613e06007041e5b4e23d5420985794020ebc.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
 </section>
-<section id="observations" class="slide level2 smaller">
-<h2>Observations</h2>
+<section id="penumbra-criterion" class="slide level2 smaller">
+<h2>Penumbra Criterion</h2>
 <div class="columns v-center-container">
 <div class="column" style="width:60%;">
 <span class="math display">\begin{cases}
@@ -488,55 +478,27 @@ A &lt; B,\\
 <p><img data-src="static_assets/PenumbraCriterionFrame.webp"></p>
 </div></div>
 </section>
-<section id="section-4" class="slide level2" data-background-video="generated/LongCharView_assets/9f69c7960da41342187deae736e5ee795f50ddf6351c8d2a591611ad7393cc07.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-5" class="slide level2" data-background-video="generated/LongCharView_assets/22dd3e60e218f806d36a1727b93e04889f8c10e45f005595d90138191b290ac6.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-6" class="slide level2" data-background-video="generated/RcProbeNear_assets/5da19cfb9ad15ee76aa400012cf36ca809663ede92fbd1d5f131a4116961c8c3.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-7" class="slide level2" data-background-video="generated/RcProbeNear_assets/c64aef13e03d6f1060a5197a4813089dc282ae16e2d61111695ac0186dbbf13d.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-8" class="slide level2" data-background-video="generated/RcProbeFar_assets/1048e4e257c275d868b579691aad5056a11436bcdb8146ddff6a08c7f7b4b822.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-9" class="slide level2" data-background-video="generated/RcProbeFar_assets/8f7d29204c8660c89048623a3e5e8b3df86e10d7542072d6a8faace5e363bbf9.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
 <section id="how-do-we-use-this" class="slide level2 smaller">
 <h2>How do we use this?</h2>
 <div class="columns v-center-container">
 <div class="column">
 <ul>
-<li>Encode radiance field as a set of cascades, each describing <span class="math inline">I_\nu</span> in annuli around <span class="math inline">\vec{p}</span>.</li>
-<li>If penumbra criterion is satisfied, cascade is linearly interpolateable!</li>
-<li>Simple (maybe not optimal) definition of cascade <span class="math inline">i</span> covering <span class="math inline">[t_i, t_{i+1}]</span>, <span class="math inline">\alpha \geq 1</span>:</li>
-</ul>
-<span class="math display">\begin{cases}
-\Delta_s \propto 2^i,\\
-\Delta_\omega \propto \cfrac{1}{2^{\alpha i}},\\
-t_i \propto 2^{\alpha i}
-\end{cases}</span>
-<ul>
-<li>Exponential scaling</li>
-<li>A single radiation field sample <span class="math inline">\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})</span> termed radiance interval.</li>
-<li>But what does these cascades look like?</li>
+<li>Encode radiance field as a set of cascades, each describing <span class="math inline">I_\nu</span> in annuli around <span class="math inline">\vec{p}</span>. <!-- - If penumbra criterion is satisfied, cascade is linearly interpolateable! --></li>
+<li>Exponential scaling of annulus width and angular sampling. <!-- - A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval. --></li>
+<li>But what do these cascades look like?</li>
 </ul>
 </div></div>
 </section>
-<section id="section-10" class="slide level2" data-background-video="generated/ProbeGrid_assets/320586287c3b87f9bdcb04a5ad6dd459f5834f850c802b9e876b1e583b1169e9.mp4" data-background-size="contain" data-background-video-muted="true">
+<section id="section-4" class="slide level2" data-background-video="generated/ProbeGrid_assets/320586287c3b87f9bdcb04a5ad6dd459f5834f850c802b9e876b1e583b1169e9.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
 </section>
-<section id="section-11" class="slide level2" data-background-video="generated/ProbeGrid_assets/6eee2e4c54dda76954a6f6d5f9f6478f92d0049ab664986ff217e703a4549eb4.mp4" data-background-size="contain" data-background-video-muted="true">
+<section id="section-5" class="slide level2" data-background-video="generated/ProbeGrid_assets/6eee2e4c54dda76954a6f6d5f9f6478f92d0049ab664986ff217e703a4549eb4.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
 </section>
-<section id="section-12" class="slide level2" data-background-video="generated/ProbeGrid_assets/2d903157a586c8bf2eb84137bb5a93b78a9acd7a58f5ac2412230ca233d0e179.mp4" data-background-size="contain" data-background-video-muted="true">
+<section id="section-6" class="slide level2" data-background-video="generated/ProbeGrid_assets/2d903157a586c8bf2eb84137bb5a93b78a9acd7a58f5ac2412230ca233d0e179.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
 </section>
-<section id="section-13" class="slide level2" data-background-video="generated/ProbeGrid_assets/25cb6cf85c1f7dfeca9987edeee9c1405b5d60d56cf583d9a9e62328e8ba73fa.mp4" data-background-size="contain" data-background-video-muted="true">
+<section id="section-7" class="slide level2" data-background-video="generated/ProbeGrid_assets/25cb6cf85c1f7dfeca9987edeee9c1405b5d60d56cf583d9a9e62328e8ba73fa.mp4" data-background-size="contain" data-background-video-muted="true">
 <h2></h2>
 </section>
 <section id="probe-interpolation" class="slide level2 smaller">
@@ -548,143 +510,34 @@ t_i \propto 2^{\alpha i}
 <li>But not in a form we can use directly.</li>
 <li>Solution:</li>
 </ul>
-<div class="fragment horiz-center">
+<div class="horiz-center">
 <p><br><span style="color: var(--teal_c);">Interpolation. But with minimal error.</span></p>
 </div>
 </div></div>
 </section>
-<section id="section-14" class="slide level2" data-background-video="generated/InterpolatedProbe_assets/72db95f3c2554ff6b6d0555078944a1a741ffdd997d3d706620f3dc1d2f93f54.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-15" class="slide level2" data-background-video="generated/InterpolatedProbe_assets/9529f15a2437152109cc9b5cc0564f003b6bbe2f21f0d35455246edbfe02913f.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-16" class="slide level2" data-background-video="generated/InterpolatedProbe_assets/dace2ee862707a17603ac9858fa6d6603a79c79c6f40093194b3aa3a85d960df.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-17" class="slide level2" data-background-video="generated/InterpolatedProbe_assets/07f7b591a723992cd5502d07f1e2c7e0183dbc71d61a0794732ad49c40cb4fb0.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="section-18" class="slide level2" data-background-video="generated/InterpolatedProbe_assets/0a806a394c6b742298cc98c17186ebdb33f88f360818a26467d18cf60e1abcef.mp4" data-background-size="contain" data-background-video-muted="true">
-<h2></h2>
-</section>
-<section id="interpolated-ray-analysis" class="slide level2 smaller">
-<h2>Interpolated Ray Analysis</h2>
-<ul>
-<li>Each cascade <span class="math inline">i+1</span> has 1/2 the rays of cascade <span class="math inline">i</span> (denoted <span class="math inline">N_{C_i}</span>)</li>
-<li>By interpolation we construct <span class="math inline">\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})</span> for each probe of cascade <span class="math inline">i</span> <span class="math inline">\left([t_i, t_{i+1}]\right)</span>.</li>
-<li>Merging cascades 0 and 1:</li>
-</ul>
-<span class="math display">\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = N_{C_0} + \cfrac{N_{C_0}}{2},\\
-\text{Rays constructed} = 2N_{C_0}.
-\end{cases}</span>
-<div class="fragment">
-<ul>
-<li>In general:</li>
-</ul>
-<span class="math display">\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = \left(1 + \cfrac{1}{2} + \cdots + \cfrac{1}{2^I} \right) &lt; 2N_{C_0},\\
-\text{Rays constructed} = 2^I N_{C_0}.
-\end{cases}</span>
-</div>
-<div class="fragment" style="color: var(--teal_c);">
-<p>Sublinear (bounded) scaling in compute, <span class="fragment red-shift">exponential</span> scaling in constructed rays!</p>
-</div>
-</section>
-<section id="interpolated-ray-analysis-contd" class="slide level2 smaller">
-<h2>Interpolated Ray Analysis cont’d</h2>
-<ul>
-<li>For a branching factor <span class="math inline">\alpha=2</span> in 2D</li>
-<li>Each cascade has the same number of rays.</li>
-<li>Merging cascades 0 and 1:</li>
-</ul>
-<span class="math display">\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = 2N_{C_0},\\
-\text{Rays constructed} = 4N_{C_0}.
-\end{cases}</span>
-<div class="fragment">
-<ul>
-<li>In general:</li>
-</ul>
-<span class="math display">\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = I N_{C_0},\\
-\text{Rays constructed} = 2^{2I} N_{C_0}.
-\end{cases}</span>
-</div>
-<div class="fragment" style="color: var(--teal_c);">
-<p>Linear scaling in compute, exponential scaling in constructed rays!</p>
-</div>
-<div class="fragment" style="color: var(--teal_c);">
-<p>Somewhat better apparent quality (small angle approximation)</p>
-</div>
-</section>
-<section id="implementation" class="slide level2 smaller">
-<h2>Implementation</h2>
+<section id="tower-of-optimisations" class="slide level2 smaller">
+<h2>Tower of Optimisations</h2>
 <p><br></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="lightweaver"><em>Lightweaver</em></h3>
 <ul>
-<li>Easy to use Python framework</li>
-<li>1/1.5/2D short characteristics</li>
-<li>Fully preconditioned MALI</li>
-<li>Heavily-optimised CPU architecture</li>
-<li>Partial frequency redistribution effects</li>
-<li>Charge conservation</li>
+<li>Sparsity and cache-friendliness</li>
+<li>Lower resolution proxies for distant rays: mipmaps with directionality and adaptive error bounds</li>
 </ul>
-</div><div class="column" style="width:50%;">
-<h3 id="dexrt"><em>DexRT</em></h3>
-<ul>
-<li>Harder to use C++ fixed-function tool <span class="fragment fade-in" data-fragment-index="0" style="color: var(--teal_c);">for HPC</span></li>
-<li>2D radiance cascades <span class="fragment fade-in" data-fragment-index="0" style="color: var(--teal_c);">🔜 3D</span></li>
-<li>Same-transition preconditioned MALI</li>
-<li><span class="fragment fade-in" data-fragment-index="0">🔜</span> <span class="fragment fade-out" data-fragment-index="0">Mildly-</span>optimised GPU architecture</li>
-<li><span class="fragment fade-in" data-fragment-index="0">🔜</span> <span class="fragment fade-out" data-fragment-index="0">No</span> partial frequency redistribution effects</li>
-<li>Charge conservation</li>
-</ul>
-</div></div>
-</section>
-<section id="machine-learning" class="slide level2 smaller">
-<h2>Machine Learning</h2>
-<div class="columns">
-<p><br></p><p>Myriad uses for hybrid models</p><p><br></p><div class="fragment" data-fragment-index="0">
-<ol type="1">
-<li>Efficient wavelength integrals for <span class="math inline">\bar{J}</span>, see Dias Baso+ 2023.</li>
-</ol>
-</div><div class="fragment" data-fragment-index="1">
-<ol start="2" type="1">
-<li>Direct evaluation of PRD scattering integral from <span class="math inline">J</span> and velocity field, similar to hybrid treatment of Leenaarts+ 2012?</li>
-</ol>
-</div><div class="fragment" data-fragment-index="2">
-<ol start="3" type="1">
-<li>Initial guess at departure coefficients from atmospheric structure, see Vicente Arévalo+ 2022.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="playtime" class="slide level2 smaller">
-<h2>Playtime</h2>
-<iframe data-src="./rc-demo.html" width="800" height="600">
-</iframe>
-</section></section>
+
+<img data-src="static_assets/mips.webp" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section>
 <section id="application" class="title-slide slide level1 center">
 <h1>Application</h1>
+<!-- ## Application {.smaller}
 
+::: {.horiz-center}
+::: {}
+<video controls loop data-autoplay src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;"></video>
+:::
+[Jenkins & Keppens 2021]{.attrib}
+::: -->
 </section>
-<section id="application-1" class="slide level2 smaller">
-<h2>Application</h2>
-<div class="horiz-center">
-<div>
-<video controls="" loop="" data-autoplay="" src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;">
-</video>
-</div>
-<p><span class="attrib">Jenkins &amp; Keppens 2021</span></p>
-</div>
-</section>
-<section id="in-particular" class="slide level2 smaller">
-<h2>In particular…</h2>
+<section id="setup" class="slide level2 smaller">
+<h2>Setup</h2>
 <p><br><br> <img data-src="static_assets/jk20200550_params.webp" class="quarto-figure quarto-figure-center"></p>
 <div class="attrib">
 <div class="columns">
@@ -701,13 +554,13 @@ t_i \propto 2^{\alpha i}
 </ul>
 </div></div>
 </div>
-</section>
-<section id="spectra-ca-ɪɪ-k" class="slide level2 smaller">
-<h2>Spectra – Ca ɪɪ K</h2>
-<div class="horiz-center">
-<video controls="" loop="" data-autoplay="" src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;">
-</video>
-</div>
+<!-- ## Spectra -- Ca ɪɪ K {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;"></video>
+
+::: -->
 </section>
 <section id="spectra-ly-β" class="slide level2 smaller">
 <h2>Spectra – Ly β</h2>
@@ -716,36 +569,15 @@ t_i \propto 2^{\alpha i}
 </video>
 </div>
 </section>
-<section id="short-characteristics-comparison" class="slide level2">
-<h2>Short Characteristics Comparison</h2>
-
-<img data-src="static_assets/jk20200550_RcvsSc.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="d-comparison-prominence" class="slide level2 smaller">
-<h2>1.5D Comparison – Prominence</h2>
-
-<img data-src="static_assets/DexVsPw_jk20200550_prom.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="d-comparison-filament" class="slide level2 smaller">
-<h2>1.5D Comparison – Filament</h2>
-
-<img data-src="static_assets/DexVsPw_jk20200550_fil.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="line-formation-contribution-function" class="slide level2 smaller">
-<h2>Line Formation – Contribution Function</h2>
-
-<img data-src="static_assets/cocoplot_ci.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="line-formation-j_nu" class="slide level2 smaller">
-<h2>Line Formation – <span class="math inline">J_\nu</span></h2>
-
-<img data-src="static_assets/cocoplot_j.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="ionisation-fraction" class="slide level2 smaller">
 <h2>Ionisation Fraction</h2>
 
-<img data-src="static_assets/jk20200550_ionisation.webp" class="quarto-figure quarto-figure-center r-stretch"></section></section>
-<section>
-<section id="outlook" class="title-slide slide level1 center">
-<h1>Outlook</h1>
+<img data-src="static_assets/jk20200550_ionisation.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="sneak-peak" class="slide level2 smaller">
+<h2>Sneak Peak</h2>
 
-</section>
-<section id="outlook-1" class="slide level2 smaller">
+<img data-src="static_assets/K_core_0056.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="outlook" class="slide level2 smaller">
 <h2>Outlook</h2>
 <div class="columns v-center-container">
 <div class="column" style="width:80%;">
@@ -756,18 +588,21 @@ t_i \propto 2^{\alpha i}
 <li>Model synthesis</li>
 <li>Ionisation effects</li>
 </ul></li>
-<li>Radiance cascades present viable route to non-LTE RMHD</li>
+<li>Radiance cascades present viable route to non-LTE RMHD
+<ul>
+<li>SAMS Project</li>
+</ul></li>
 <li>And also to enhance radiation treatment across astrophysics</li>
-<li>GPUs are really powerful…</li>
+<li>GPUs are really powerful, and graphics programming has lots to offer us</li>
 </ul>
 <p><br><br> <span style="color: var(--teal_c);">Thanks!</span></p>
 <p><a href="mailto:christopher.osborne@glasgow.ac.uk">Christopher.Osborne@glasgow.ac.uk</a></p>
 </div><div class="column" style="width:20%;">
-<p><a href="https://arxiv.org/abs/2408.14425"><img data-src="static_assets/preprint_qr.webp" alt="Preprint"></a> <span class="attrib">Preprint</span></p>
+<p><a href="https://doi.org/10.1093/rasti/rzae062"><img data-src="static_assets/final_rc_qr.webp" alt="Preprint"></a> <span class="attrib">Paper</span></p>
 </div></div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
-<p>Radiance Cascades</p>
+<p>Radiance Cascades: DexRT</p>
 </div>
 </div>
 </section></section>
