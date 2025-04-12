@@ -1,6 +1,6 @@
 ---
-title: '[Towards the Next Generation<br/>of Radiative Transfer Models:]{.r-fit-text}'
-subtitle: '[Radiance Cascades]{style="color: var(--teal_c);"}'
+title: '[Radiative Models of Coronal Condensation<br/>at Extreme Resolution:]{.r-fit-text}'
+subtitle: '[DexRT]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
