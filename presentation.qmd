@@ -1,6 +1,6 @@
 ---
-title: '[Next Generation Non-LTE<br/>Radiative Transfer:]{.r-fit-text}'
-subtitle: '[DexRT]{style="color: var(--teal_c);"}'
+title: '[Towards the Next Generation<br/>of Radiative Transfer Models:]{.r-fit-text}'
+subtitle: '[Radiance Cascades]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
@@ -17,6 +17,21 @@ format:
       data-background-position: 2% 2%
     controls: true
 ---
+
+## Contents
+
+::: {.v-center-container}
+
+- Where are we now?
+- Radiance Cascades ✨
+- Application
+- Outlook
+
+:::
+
+## Promotion...
+
+![](static_assets/Abstract.png){fig-align="center"}
 
 ## Non-LTE Radiative Transfer {.smaller}
 
@@ -63,21 +78,16 @@ format:
 
 :::
 
+
 ## Non-LTE Radiative Transfer {.smaller}
 
 :::: {.columns .v-center-container}
 
 ::: {.column width="50%"}
-- 1.5D RT treats columns independently.
-
-- More importantly, as having infinite extent in the horizontal plane.
+- RT codes designed around the idea of smooth atmospheres...
 
 ::: {.incremental}
-- 2+D RT codes designed around the idea of smooth atmospheres...
-:::
-
-::: {.incremental}
-- But ours look like this:
+- But ours look like this
 :::
 :::
 
@@ -105,6 +115,16 @@ format:
 
 ::::
 
+
+
+## Prominence Albedo
+
+![](static_assets/JenkinsAlbedo.png){fig-align="center"}
+
+::: {.horiz-center}
+[Jenkins+ 2024]{.attrib}
+:::
+
 ## Ray Effects
 
 ![](static_assets/ScRays.png){fig-align="center"}
@@ -115,12 +135,9 @@ format:
 
 # How do we build this?
 
-- Where else is light transport solved?
-  - Physically Based Rendering
-
 {{ PenumbraCriterion }}
 
-## Penumbra Criterion {.smaller}
+## Observations {.smaller}
 
 :::: {.columns .v-center-container}
 
@@ -152,15 +169,31 @@ with some small angles approximations...
 :::
 ::::
 
+{{ LongCharView }}
+
+{{ RcProbeNear }}
+
+{{ RcProbeFar }}
+
 ## How do we use this? {.smaller}
 
 ::: {.columns .v-center-container}
 
 ::: {.column}
 - Encode radiance field as a set of cascades, each describing $I_\nu$ in annuli around $\vec{p}$.
-<!-- - If penumbra criterion is satisfied, cascade is linearly interpolateable! -->
-- Exponential scaling of annulus width and angular sampling.
-<!-- - A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval. -->
+- If penumbra criterion is satisfied, cascade is linearly interpolateable!
+- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, $\alpha \geq 1$:
+
+```{=tex}
+\begin{cases}
+\Delta_s \propto 2^i,\\
+\Delta_\omega \propto \cfrac{1}{2^{\alpha i}},\\
+t_i \propto 2^{\alpha i}
+\end{cases}
+```
+
+- Exponential scaling
+- A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval.
 - But what do these cascades look like?
 
 :::
@@ -176,10 +209,67 @@ with some small angles approximations...
 - But not in a form we can use directly.
 - Solution:
 
-::: {.horiz-center}
+::: {.fragment .horiz-center}
 <br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
 :::
 :::
+:::
+
+{{ InterpolatedProbe }}
+
+## Interpolated Ray Analysis {.smaller}
+
+- Each cascade $i+1$ has 1/2 the rays of cascade $i$ (denoted $N_{C_i}$)
+- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ $\left([t_i, t_{i+1}]\right)$.
+- Merging cascades 0 and 1:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = N_{C_0} + N_{C_1} = N_{C_0} + \cfrac{N_{C_0}}{2},\\
+\text{Rays constructed} = 2N_{C_0}.
+\end{cases}
+```
+
+::: {.fragment}
+- In general:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = \sum_I N_{C_i} = \left(1 + \cfrac{1}{2} + \cdots + \cfrac{1}{2^I} \right) < 2N_{C_0},\\
+\text{Rays constructed} = 2^I N_{C_0}.
+\end{cases}
+```
+:::
+
+::: {.fragment style="color: var(--teal_c);"}
+Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
+:::
+
+## Interpolated Ray Analysis cont'd {.smaller}
+
+- For a branching factor $\alpha=2$ in 2D
+- Each cascade has the same number of rays.
+- Merging cascades 0 and 1:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = N_{C_0} + N_{C_1} = 2N_{C_0},\\
+\text{Rays constructed} = 4N_{C_0}.
+\end{cases}
+```
+
+::: {.fragment}
+- In general:
+```{=tex}
+\begin{cases}
+\text{Rays computed} = \sum_I N_{C_i} = I N_{C_0},\\
+\text{Rays constructed} = 2^{2I} N_{C_0}.
+\end{cases}
+```
+:::
+
+::: {.fragment style="color: var(--teal_c);"}
+Linear scaling in compute, exponential scaling in constructed rays!
+:::
+::: {.fragment style="color: var(--teal_c);"}
+Somewhat better apparent quality (small angle approximation)
 :::
 
 ## Tower of Optimisations {.smaller}
@@ -187,25 +277,60 @@ with some small angles approximations...
 <br/>
 
 - Sparsity and cache-friendliness
-- Lower resolution proxies for distant rays: mipmaps with directionality and adaptive error bounds
+- Lower resolution proxies for distant rays: mipmaps with directionality and adaptive error bounds (variance of log emissivity and opacity)
 
 ![](static_assets/mips.png){fig-align="center"}
 
+- In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.
 
+## MIP Levels {.smaller}
 
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/lyb_blocks.mp4" style="max-width: 80%;"></video>
+
+:::
+
+## Machine Learning {.smaller}
+
+::: {.columns}
+
+<br/>
+
+Myriad uses for hybrid models
+
+<br/>
+
+::: {.fragment data-fragment-index="0"}
+1. Efficient wavelength integrals for $\bar{J}$, see Dias Baso+ 2023.
+:::
+
+::: {.fragment data-fragment-index="1"}
+2. Direct evaluation of PRD scattering integral from $J$ and velocity field, similar to hybrid treatment of Leenaarts+ 2012
+:::
+
+::: {.fragment data-fragment-index="2"}
+3. Initial guess at departure coefficients from atmospheric structure, (Vicente Arévalo+ 2022), or "smarter" acceleration of Rate Equation convergence...
+:::
+
+:::
+
+## Playtime {.smaller}
+
+<iframe data-src="./rc-demo.html" width=800 height=600></iframe>
 
 # Application
 
-<!-- ## Application {.smaller}
+## Application {.smaller}
 
 ::: {.horiz-center}
 ::: {}
 <video controls loop data-autoplay src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;"></video>
 :::
 [Jenkins & Keppens 2021]{.attrib}
-::: -->
+:::
 
-## Setup {.smaller}
+## In particular... {.smaller}
 
 <br/><br/>
 ![](static_assets/jk20200550_params.png){fig-align="center"}
@@ -224,14 +349,17 @@ with some small angles approximations...
 ::::
 :::
 
+## Short Characteristics Comparison
 
-<!-- ## Spectra -- Ca ɪɪ K {.smaller}
+![](static_assets/jk20200550_RcvsSc.png){fig-align="center"}
+
+## Spectra -- Ca ɪɪ K {.smaller}
 
 ::: {.horiz-center}
 
 <video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;"></video>
 
-::: -->
+:::
 
 ## Spectra -- Ly β {.smaller}
 
@@ -241,13 +369,36 @@ with some small angles approximations...
 
 :::
 
+
 ## Ionisation Fraction {.smaller}
 
 ![](static_assets/jk20200550_ionisation.png){fig-align="center"}
 
-## Sneak Peak {.smaller}
+# Outlook
 
-![](static_assets/K_core_0056.png){fig-align="center"}
+## Ca ɪɪ K in 3D (Donné & Keppens) {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/K_core_2.mp4" style="max-width: 60%;"></video>
+
+:::
+
+## Ca ɪɪ K COCOPLOT {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/K_ccp_slit_1x_2.mp4" style="max-width: 75%;"></video>
+
+:::
+
+## Ly β COCOPLOT {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/lyb_ccp_slit_1x.mp4" style="max-width: 75%;"></video>
+
+:::
 
 ## Outlook {.smaller}
 
@@ -274,5 +425,22 @@ with some small angles approximations...
 [Paper]{.attrib}
 :::
 
+
 ::::
+
+## 1.5D Comparison -- Prominence {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
+
+## 1.5D Comparison -- Filament {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
+
+## Line Formation -- Contribution Function {.smaller}
+
+![](static_assets/cocoplot_ci.png){fig-align="center"}
+
+## Line Formation -- $J_\nu$ {.smaller}
+
+![](static_assets/cocoplot_j.png){fig-align="center"}
 
