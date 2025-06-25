@@ -1,13 +1,13 @@
 ---
-title: '[Radiative Models of Coronal Condensation<br/>at Extreme Resolution:]{.r-fit-text}'
-subtitle: '[DexRT]{style="color: var(--teal_c);"}'
+title: '[Astronomical Radiative Transfer and Video Games:]{.r-fit-text}'
+subtitle: '[A Match Made in the Sun]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
 format:
   revealjs:
     slide-number: true
-    footer: "Radiance Cascades: DexRT"
+    footer: "Radiance Cascades"
     theme: [night, my_style.scss]
     progress: false
     html-math-method: katex
@@ -18,20 +18,46 @@ format:
     controls: true
 ---
 
-## Contents
+## Who recognises this? {.smaller}
 
-::: {.v-center-container}
+::: {.horiz-center}
 
-- Where are we now?
-- Radiance Cascades ✨
-- Application
-- Outlook
+![](static_assets/box.jpg){fig-align="center" height=520px}
+
+[Cornell University]{.attrib}
 
 :::
 
-## Promotion...
+## And how does it connect to this? {.smaller}
 
-![](static_assets/Abstract.png){fig-align="center"}
+::: {.horiz-center}
+
+![](static_assets/gum41.jpg){fig-align="center" height=520px}
+
+[VLT (ESO)]{.attrib}
+
+:::
+
+## Physics! {.smaller}
+
+```{=tex}
+\begin{align*}
+(\hat{\omega} \cdot \nabla) L(\vec{p}, \hat{\omega}) = &-\chi(\vec{p}, \hat{\omega}) L(\vec{p}, \hat{\omega}) \\
+&+ \eta(\vec{p}, \hat{\omega}) \\
+&+ \sigma_s(\vec{p}, \hat{\omega}) \oint_{\mathbb{S}^2} p(\vec{p}, \hat{\omega}^\prime, \hat{\omega}) L(\vec{p}, \hat{\omega}^\prime)\, d\hat{\omega}^\prime
+\end{align*}
+```
+
+This hybrid notation will probably make everyone mad!
+
+- $L$ radiance,
+- $\eta$ emission coefficient,
+- $\chi$ absorption coefficient,
+- $\sigma_s$ scattering coefficient,
+- $p$ phase function.
+
+
+[Key takeaway: this is a recursive integro-differential equation!]{style="color: var(--teal_c);"}
 
 ## Non-LTE Radiative Transfer {.smaller}
 
@@ -40,7 +66,6 @@ format:
 ::: {.column width="50%"}
 - Coupling between radiation field and atomic transitions.
 - Extremely computationally demanding, but necessary for many spectral lines.
-- Needed for models, diagnostics, and inversions.
 - Also, ionisation.
 :::
 
@@ -66,64 +91,18 @@ format:
 ```{=tex}
 \begin{align*}
     J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
-    &\vec{p} \in \mathbb{R}^3, \hat{\omega} \in \mathbb{S}^2\\
+    &\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
 \end{align*}
 ```
 
 - Specific intensity and its first moment.
-- 4 and 6 dimensional functions!
+- 3 and 5 dimensional functions! (+ wavelength...)
+- Recursive component solved by fixed-point iteration in the atomic populations.
 :::
-
-:::
-
-:::
-
-
-## Non-LTE Radiative Transfer {.smaller}
-
-:::: {.columns .v-center-container}
-
-::: {.column width="50%"}
-- RT codes designed around the idea of smooth atmospheres...
-
-::: {.incremental}
-- But ours look like this
 :::
 :::
 
-::: {.column width="50%" .r-stack}
-
-::: {.fragment .current-visible}
-![](static_assets/jk_atmos.png){style="max-width: 80%;"}
-
-[Jenkins & Keppens 2021]{.attrib}
-:::
-
-::: {.fragment .current-visible}
-![](static_assets/CarlssonModel.png){style="max-width: 80%;"}
-
-[Carlsson+ 2016]{.attrib}
-:::
-
-::: {.fragment .current-visible}
-![](static_assets/PrzybylskiTemp.png){style="max-width: 80%;"}
-
-[Przybylski+ 2022]{.attrib}
-:::
-
-:::
-
-::::
-
-
-
-## Prominence Albedo
-
-![](static_assets/JenkinsAlbedo.png){fig-align="center"}
-
-::: {.horiz-center}
-[Jenkins+ 2024]{.attrib}
-:::
+## Monte Carlo
 
 ## Ray Effects
 
@@ -132,6 +111,23 @@ format:
 ## Desired Result
 
 ![](static_assets/RcRays.png){fig-align="center"}
+
+## Tricky Radiation {.smaller}
+
+::: {.columns .v-center-container}
+
+:::: {.column width="80%"}
+
+- In the steady-state solution of radiative transfer coupling is [global.]{style="color: var(--teal_c);"}
+- This hinders parallelisation (and SC imposes its own additional dependencies even within a patch).
+- Monte Carlo approaches have poor convergence rates.
+- [Is there some middle ground?]{style="color: var(--teal_c);"}
+
+::: {.fragment}
+- Video games are now solving an adjacent problem at reasonable resolutions _hundreds_ of times a second on single workstations...
+:::
+::::
+:::
 
 # How do we build this?
 
