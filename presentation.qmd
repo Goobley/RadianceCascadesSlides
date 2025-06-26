@@ -104,6 +104,14 @@ This hybrid notation will probably make everyone mad!
 
 ## Monte Carlo
 
+::: { #figg-montecarlo layout-ncol=2}
+
+![8 spp](static_assets/kroken-8spp.png){ #figg-8spp}
+
+![8192 spp (PBR Book, Pharr et al)](static_assets/kroken-8192spp.png){ #figg-8192spp}
+
+:::
+
 ## Ray Effects
 
 ![](static_assets/ScRays.png){fig-align="center"}
@@ -121,6 +129,7 @@ This hybrid notation will probably make everyone mad!
 - In the steady-state solution of radiative transfer coupling is [global.]{style="color: var(--teal_c);"}
 - This hinders parallelisation (and SC imposes its own additional dependencies even within a patch).
 - Monte Carlo approaches have poor convergence rates.
+- Spectroscopy has very high anisotropy requirements.
 - [Is there some middle ground?]{style="color: var(--teal_c);"}
 
 ::: {.fragment}
@@ -129,15 +138,21 @@ This hybrid notation will probably make everyone mad!
 ::::
 :::
 
-# How do we build this?
+## Radiance Cascades {.smaller}
 
-{{ PenumbraCriterion }}
+::: {.v-center-container}
 
-## Observations {.smaller}
+![](static_assets/title_final.png){fig-align="center"}
+
+:::
+
+## Radiance Cascades: Observations {.smaller}
 
 :::: {.columns .v-center-container}
 
 ::: {.column width="60%"}
+
+- Linear light source and blocker:
 
 ```{=tex}
 \begin{cases}
@@ -165,11 +180,11 @@ with some small angles approximations...
 :::
 ::::
 
-{{ LongCharView }}
-
 {{ RcProbeNear }}
 
 {{ RcProbeFar }}
+
+{{ ProbeGrid }}
 
 ## How do we use this? {.smaller}
 
@@ -178,237 +193,56 @@ with some small angles approximations...
 ::: {.column}
 - Encode radiance field as a set of cascades, each describing $I_\nu$ in annuli around $\vec{p}$.
 - If penumbra criterion is satisfied, cascade is linearly interpolateable!
-- Simple (maybe not optimal) definition of cascade $i$ covering $[t_i, t_{i+1}]$, $\alpha \geq 1$:
+  - Serves as Nyquist criterion
 
-```{=tex}
-\begin{cases}
-\Delta_s \propto 2^i,\\
-\Delta_\omega \propto \cfrac{1}{2^{\alpha i}},\\
-t_i \propto 2^{\alpha i}
-\end{cases}
-```
-
-- Exponential scaling
-- A single radiation field sample $\mathcal{R}_{t_i, t_{i+1}}(\vec{p},\hat{\omega})$ termed radiance interval.
-- But what do these cascades look like?
-
-:::
-:::
-
-{{ ProbeGrid }}
-
-## Probe Interpolation {.smaller}
-
-::: {.columns .v-center-container}
-::: {.column}
-- This construction sparsely encodes the radiation field throughout the domain...
+- The cascades sparsely encode the radiation field throughout the domain...
 - But not in a form we can use directly.
 - Solution:
 
 ::: {.fragment .horiz-center}
 <br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
 :::
-:::
-:::
-
-{{ InterpolatedProbe }}
-
-## Interpolated Ray Analysis {.smaller}
-
-- Each cascade $i+1$ has 1/2 the rays of cascade $i$ (denoted $N_{C_i}$)
-- By interpolation we construct $\mathcal{R}_{t_{i+1},t_{i+2}}(\vec{p},\hat{\omega})$ for each probe of cascade $i$ $\left([t_i, t_{i+1}]\right)$.
-- Merging cascades 0 and 1:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = N_{C_0} + \cfrac{N_{C_0}}{2},\\
-\text{Rays constructed} = 2N_{C_0}.
-\end{cases}
-```
 
 ::: {.fragment}
-- In general:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = \left(1 + \cfrac{1}{2} + \cdots + \cfrac{1}{2^I} \right) < 2N_{C_0},\\
-\text{Rays constructed} = 2^I N_{C_0}.
-\end{cases}
-```
+- Interpolation leads to reuse of rays in upper cascades and the effective construction of exponentially more rays than computed directly.
 :::
 
-::: {.fragment style="color: var(--teal_c);"}
-Sublinear (bounded) scaling in compute, [exponential]{.fragment .red-shift} scaling in constructed rays!
+:::
 :::
 
-## Interpolated Ray Analysis cont'd {.smaller}
+## Further Optimisations {.smaller}
 
-- For a branching factor $\alpha=2$ in 2D
-- Each cascade has the same number of rays.
-- Merging cascades 0 and 1:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = N_{C_0} + N_{C_1} = 2N_{C_0},\\
-\text{Rays constructed} = 4N_{C_0}.
-\end{cases}
-```
+::: {.v-center-container}
 
-::: {.fragment}
-- In general:
-```{=tex}
-\begin{cases}
-\text{Rays computed} = \sum_I N_{C_i} = I N_{C_0},\\
-\text{Rays constructed} = 2^{2I} N_{C_0}.
-\end{cases}
-```
+- GPU-first design (has achieved 40$\times$ perf/Watt vs CPU).
+- Use a performance-portability library -- no ifs, no buts -- especially for small teams.
+  - We use Kokkos with some additional layers.
+  - Python pre/postprocessing.
+
+- First solar non-LTE code to exploit atmospheric sparsity.
+
 :::
 
-::: {.fragment style="color: var(--teal_c);"}
-Linear scaling in compute, exponential scaling in constructed rays!
-:::
-::: {.fragment style="color: var(--teal_c);"}
-Somewhat better apparent quality (small angle approximation)
-:::
+## Mipmaps & Ray Acceleration {.smaller}
 
-## Tower of Optimisations {.smaller}
+- Lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity)
 
-<br/>
-
-- Sparsity and cache-friendliness
-- Lower resolution proxies for distant rays: mipmaps with directionality and adaptive error bounds (variance of log emissivity and opacity)
-
-![](static_assets/mips.png){fig-align="center"}
+![](static_assets/adaptive_mip.png){fig-align="center"}
 
 - In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.
+- Store data in Morton order as much as possible.
+- Inspired by OpenVDB.
 
-## MIP Levels {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/lyb_blocks.mp4" style="max-width: 80%;"></video>
-
-:::
-
-## Machine Learning {.smaller}
-
-::: {.columns}
-
-<br/>
-
-Myriad uses for hybrid models
-
-<br/>
-
-::: {.fragment data-fragment-index="0"}
-1. Efficient wavelength integrals for $\bar{J}$, see Dias Baso+ 2023.
-:::
-
-::: {.fragment data-fragment-index="1"}
-2. Direct evaluation of PRD scattering integral from $J$ and velocity field, similar to hybrid treatment of Leenaarts+ 2012
-:::
-
-::: {.fragment data-fragment-index="2"}
-3. Initial guess at departure coefficients from atmospheric structure, (Vicente Arévalo+ 2022), or "smarter" acceleration of Rate Equation convergence...
-:::
-
-:::
-
-## Playtime {.smaller}
-
-<iframe data-src="./rc-demo.html" width=800 height=600></iframe>
-
-# Application
-
-## Application {.smaller}
-
-::: {.horiz-center}
-::: {}
-<video controls loop data-autoplay src="static_assets/jk_3g_model.mp4" height="80%" style="max-width: 80%;"></video>
-:::
-[Jenkins & Keppens 2021]{.attrib}
-:::
-
-## In particular... {.smaller}
-
-<br/><br/>
-![](static_assets/jk20200550_params.png){fig-align="center"}
-
-::: {.attrib}
-:::: {.columns}
-::: {.column width=50%}
-- 5.7 km resolution!
-- 3072 x 2048
-:::
-::: {.column width=50%}
-- 5+1 level H
-- 5+1 level Ca ɪɪ
-- Charge & pressure conservation
-:::
-::::
-:::
-
-## Short Characteristics Comparison
-
-![](static_assets/jk20200550_RcvsSc.png){fig-align="center"}
-
-## Spectra -- Ca ɪɪ K {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/Ca_II_393.48_nm.mp4" style="max-width: 80%;"></video>
-
-:::
-
-## Spectra -- Ly β {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/H_I_102.57_nm.mp4" style="max-width: 80%;"></video>
-
-:::
-
-
-## Ionisation Fraction {.smaller}
-
-![](static_assets/jk20200550_ionisation.png){fig-align="center"}
-
-# Outlook
-
-## Ca ɪɪ K in 3D (Donné & Keppens) {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/K_core_2.mp4" style="max-width: 60%;"></video>
-
-:::
-
-## Ca ɪɪ K COCOPLOT {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/K_ccp_slit_1x_2.mp4" style="max-width: 75%;"></video>
-
-:::
-
-## Ly β COCOPLOT {.smaller}
-
-::: {.horiz-center}
-
-<video controls loop data-autoplay src="static_assets/lyb_ccp_slit_1x.mp4" style="max-width: 75%;"></video>
-
-:::
 
 ## Outlook {.smaller}
 
 :::: {.columns .v-center-container}
 
 ::: {.column width=80%}
-- Radiative transfer effects are necessary for realistic solar models
-  - Observational interpretation
-  - Model synthesis
-  - Ionisation effects
-- Radiance cascades present viable route to non-LTE RMHD
-  - SAMS Project
-- And also to enhance radiation treatment across astrophysics
-- GPUs are really powerful, and graphics programming has lots to offer us
+- Performance Portability libraries are a force multiplier for small teams.
+- Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
+- There _are_ equivalent/adjacent problems in other fields, and it's worth our time to seek them out.
+  - e.g. radiance cascades can be repurposed for cosmological self-gravity
 
 <br/><br/>
 [Thanks!]{style="color: var(--teal_c);"}
@@ -417,12 +251,21 @@ Myriad uses for hybrid models
 :::
 
 ::: {.column width=20%}
-[![Preprint](static_assets/final_rc_qr.png)](https://doi.org/10.1093/rasti/rzae062)
+[![Paper](static_assets/final_rc_qr.png)](https://doi.org/10.1093/rasti/rzae062)
 [Paper]{.attrib}
 :::
 
-
 ::::
+
+# Outlook
+
+## Ly β COCOPLOT (Donné & Keppens) {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/lyb_ccp_slit_1x.mp4" style="max-width: 75%;"></video>
+
+:::
 
 ## 1.5D Comparison -- Prominence {.smaller}
 
