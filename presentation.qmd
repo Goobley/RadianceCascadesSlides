@@ -257,8 +257,6 @@ with some small angles approximations...
 
 ::::
 
-# Outlook
-
 ## Ly β COCOPLOT (Donné & Keppens) {.smaller}
 
 ::: {.horiz-center}
