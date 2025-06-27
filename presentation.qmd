@@ -1,6 +1,6 @@
 ---
-title: '[Astronomical Radiative Transfer and Video Games:]{.r-fit-text}'
-subtitle: '[A Match Made in the Sun]{style="color: var(--teal_c);"}'
+title: '[Non-LTE Radiative Models of Coronal Condensations]{.r-fit-text}'
+subtitle: '[at Extreme Resolution]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
@@ -18,47 +18,6 @@ format:
     controls: true
 ---
 
-## Who recognises this? {.smaller}
-
-::: {.horiz-center}
-
-![](static_assets/box.jpg){fig-align="center" height=520px}
-
-[Cornell University]{.attrib}
-
-:::
-
-## And how does it connect to this? {.smaller}
-
-::: {.horiz-center}
-
-![](static_assets/gum41.jpg){fig-align="center" height=520px}
-
-[VLT (ESO)]{.attrib}
-
-:::
-
-## Physics! {.smaller}
-
-```{=tex}
-\begin{align*}
-(\hat{\omega} \cdot \nabla) L(\vec{p}, \hat{\omega}) = &-\chi(\vec{p}, \hat{\omega}) L(\vec{p}, \hat{\omega}) \\
-&+ \eta(\vec{p}, \hat{\omega}) \\
-&+ \sigma_s(\vec{p}, \hat{\omega}) \oint_{\mathbb{S}^2} p(\vec{p}, \hat{\omega}^\prime, \hat{\omega}) L(\vec{p}, \hat{\omega}^\prime)\, d\hat{\omega}^\prime
-\end{align*}
-```
-
-This hybrid notation will probably make everyone mad!
-
-- $L$ radiance,
-- $\eta$ emission coefficient,
-- $\chi$ absorption coefficient,
-- $\sigma_s$ scattering coefficient,
-- $p$ phase function.
-
-
-[Key takeaway: this is a recursive integro-differential equation!]{style="color: var(--teal_c);"}
-
 ## Non-LTE Radiative Transfer {.smaller}
 
 :::: {.columns .v-center-container}
@@ -70,46 +29,56 @@ This hybrid notation will probably make everyone mad!
 :::
 
 ::: {.column width="50%"}
-<video loop data-autoplay src="static_assets/HinodeProm.mp4" width="99%"></video>
+<video loop data-autoplay src="static_assets/hillier_polito_iris.mp4" width="99%"></video>
 
-[HINODE BFI]{.attrib}
+[IRIS (Hillier & Polito 2018)]{.attrib}
 :::
 
 ::::
 
-## Most Important Quantities {.smaller}
+## State of the Art I {.smaller}
 
-::: {.v-center-container .horiz-center}
+:::: {.columns .v-center-container}
 
-::: {.column}
-
-- Radiative rates depend on intensity.
-- Intensity depends on radiative rates.
-
-:::{.fragment}
-<br/>
-```{=tex}
-\begin{align*}
-    J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
-    &\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
-\end{align*}
-```
-
-- Specific intensity and its first moment.
-- 3 and 5 dimensional functions! (+ wavelength...)
-- Recursive component solved by fixed-point iteration in the atomic populations.
-:::
-:::
+::: {.column width="50%"}
+- 1.5D and 2D simplified slabs.
+- Postprocess multithread stacking (Gunar+ 2008, Peat+ Poster).
+- Can produce complex line profiles, but how to motivate velocity distribution?
 :::
 
-## Monte Carlo
+::: {.column width="50%"}
 
-::: { #figg-montecarlo layout-ncol=2}
+![](static_assets/peat_setup.png){fig-align="center"}
+![](static_assets/peat_slit.png){fig-align="center"}
+[Peat+ 2023]{.attrib}
 
-![8 spp](static_assets/kroken-8spp.png){ #figg-8spp}
+:::
+::::
 
-![8192 spp (PBR Book, Pharr et al)](static_assets/kroken-8192spp.png){ #figg-8192spp}
+## State of the Art II {.smaller}
 
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- MHD prominence models have advanced dramatically in the last decade.
+- Radiative loss approaches have lagged behind (especially vs chromosphere).
+- Adopting 1.5D column-by-column approach from chromospheric modelling.
+:::
+
+::: {.column width="50%"}
+
+![](static_assets/jenkins_15d_prom.png){fig-align="center"}
+[Jenkins+ 2023]{.attrib}
+
+:::
+::::
+
+## But how do we gain insights on observations like this? {.smaller}
+
+::: {.horiz-center}
+![](static_assets/iris_fake_noise.png){fig-align="center" height=520px}
+
+[IRIS Mg ɪɪ k]{.attrib}
 :::
 
 ## Ray Effects
@@ -120,33 +89,7 @@ This hybrid notation will probably make everyone mad!
 
 ![](static_assets/RcRays.png){fig-align="center"}
 
-## Tricky Radiation {.smaller}
-
-::: {.columns .v-center-container}
-
-:::: {.column width="80%"}
-
-- In the steady-state solution of radiative transfer coupling is [global.]{style="color: var(--teal_c);"}
-- This hinders parallelisation (and SC imposes its own additional dependencies even within a patch).
-- Monte Carlo approaches have poor convergence rates.
-- Spectroscopy has very high anisotropy requirements.
-- [Is there some middle ground?]{style="color: var(--teal_c);"}
-
-::: {.fragment}
-- Video games are now solving an adjacent problem at reasonable resolutions _hundreds_ of times a second on single workstations...
-:::
-::::
-:::
-
-## Radiance Cascades {.smaller}
-
-::: {.v-center-container}
-
-![](static_assets/title_final.png){fig-align="center"}
-
-:::
-
-## Radiance Cascades: Observations {.smaller}
+## Radiance Cascades: Redux {.smaller}
 
 :::: {.columns .v-center-container}
 
@@ -195,14 +138,6 @@ with some small angles approximations...
 - If penumbra criterion is satisfied, cascade is linearly interpolateable!
   - Serves as Nyquist criterion
 
-- The cascades sparsely encode the radiation field throughout the domain...
-- But not in a form we can use directly.
-- Solution:
-
-::: {.fragment .horiz-center}
-<br/>[Interpolation. But with minimal error.]{style="color: var(--teal_c);"}
-:::
-
 ::: {.fragment}
 - Interpolation leads to reuse of rays in upper cascades and the effective construction of exponentially more rays than computed directly.
 :::
@@ -210,39 +145,56 @@ with some small angles approximations...
 :::
 :::
 
-## Further Optimisations {.smaller}
+# Science!
 
-::: {.v-center-container}
+## The Model {.smaller}
 
-- GPU-first design (has achieved 40$\times$ perf/Watt vs CPU).
-- Use a performance-portability library -- no ifs, no buts -- especially for small teams.
-  - We use Kokkos with some additional layers.
-  - Python pre/postprocessing.
+![](static_assets/donne_keppens_evolution.png){fig-align="center"}
 
-- First solar non-LTE code to exploit atmospheric sparsity.
+[Donné & Keppens 2024]{.attrib}
+
+## Ly β COCOPLOT {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/lyb_ccp_wings.mp4" style="max-width: 75%;"></video>
 
 :::
 
-## Mipmaps & Ray Acceleration {.smaller}
+## Mg ɪɪ k COCOPLOT {.smaller}
 
-- Lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity)
+::: {.horiz-center}
 
-![](static_assets/adaptive_mip.png){fig-align="center"}
+<video controls loop data-autoplay src="static_assets/Mgk_orbit_bettertonemap.mp4" style="max-width: 75%;"></video>
 
-- In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.
-- Store data in Morton order as much as possible.
-- Inspired by OpenVDB.
+:::
 
+## Diving into the lines I {.smaller}
 
-## Outlook {.smaller}
+::: {.horiz-center}
+![](static_assets/multithread_18.png){height=300px fig-align="center"}
+![](static_assets/multithread_19.png){height=300px fig-align="center"}
+:::
+
+## Diving into the lines II {.smaller}
+
+::: {.horiz-center}
+![](static_assets/multithread_18.png){height=300px fig-align="center"}
+![](static_assets/multithread_20.png){height=300px fig-align="center"}
+:::
+
+## Takeaways {.smaller}
 
 :::: {.columns .v-center-container}
 
 ::: {.column width=80%}
-- Performance Portability libraries are a force multiplier for small teams.
-- Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
-- There _are_ equivalent/adjacent problems in other fields, and it's worth our time to seek them out.
-  - e.g. radiance cascades can be repurposed for cosmological self-gravity
+- Simulation structures are typically axis aligned.
+- Significant complexity arises from looking outside this alignment.
+- The next step in meaningfully interpreting these structures will come from multi-line inversions.
+- Radiative losses and ionisation are model dependent, but what generalities can we extract?
+  - How does a detailed radiation treatment affect formation and evolution?
+  - Work in progress!
+- These new techniques will also feed into SAMS.
 
 <br/><br/>
 [Thanks!]{style="color: var(--teal_c);"}
@@ -257,12 +209,18 @@ with some small angles approximations...
 
 ::::
 
-## Ly β COCOPLOT (Donné & Keppens) {.smaller}
+## Spatially Convolved Lines I {.smaller}
 
 ::: {.horiz-center}
+![](static_assets/multithread_18_convolve.png){height=300px fig-align="center"}
+![](static_assets/multithread_19_convolve.png){height=300px fig-align="center"}
+:::
 
-<video controls loop data-autoplay src="static_assets/lyb_ccp_slit_1x.mp4" style="max-width: 75%;"></video>
+## Spatially Convolved Lines II {.smaller}
 
+::: {.horiz-center}
+![](static_assets/multithread_18_convolve.png){height=300px fig-align="center"}
+![](static_assets/multithread_20_convolve.png){height=300px fig-align="center"}
 :::
 
 ## 1.5D Comparison -- Prominence {.smaller}
