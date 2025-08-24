@@ -1,6 +1,6 @@
 ---
-title: '[Non-LTE Radiative Models of Coronal Condensations]{.r-fit-text}'
-subtitle: '[at Extreme Resolution]{style="color: var(--teal_c);"}'
+title: '[&nbsp;&nbsp;&nbsp;&nbsp;Radiance Cascades 3D&nbsp;&nbsp;&nbsp;&nbsp;]{.r-fit-text}'
+subtitle: '[&nbsp;&nbsp;and Beyond&nbsp;&nbsp;]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
@@ -18,7 +18,9 @@ format:
     controls: true
 ---
 
-## Non-LTE Radiative Transfer {.smaller}
+## Prominence Modelling I {.smaller}
+
+<!-- ## Non-LTE Radiative Transfer {.smaller}
 
 :::: {.columns .v-center-container}
 
@@ -34,15 +36,13 @@ format:
 [IRIS (Hillier & Polito 2018)]{.attrib}
 :::
 
-::::
-
-## State of the Art I {.smaller}
+:::: -->
 
 :::: {.columns .v-center-container}
 
 ::: {.column width="50%"}
 - 1.5D and 2D simplified slabs.
-- Postprocess multithread stacking (Gunar+ 2008, Peat+ Poster).
+- Postprocess multithread stacking (Gunar+ 2008, Peat+ 2023).
 - Can produce complex line profiles, but how to motivate velocity distribution?
 :::
 
@@ -55,7 +55,7 @@ format:
 :::
 ::::
 
-## State of the Art II {.smaller}
+## Prominence Modelling II {.smaller}
 
 :::: {.columns .v-center-container}
 
@@ -145,6 +145,38 @@ with some small angles approximations...
 :::
 :::
 
+## Further Optimisations {.smaller}
+
+::: {.v-center-container}
+
+- GPU-first design (has achieved 40$\times$ perf/Watt vs CPU).
+- Use a performance-portability library -- no ifs, no buts -- especially for small teams.
+  - We use Kokkos with some additional layers.
+  - Python pre/postprocessing.
+
+- First solar non-LTE code to exploit atmospheric sparsity.
+
+:::
+
+## Mipmaps & Ray Acceleration {.smaller}
+
+- Lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity)
+
+![](static_assets/adaptive_mip.png){fig-align="center"}
+
+- In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.
+- Store data in Morton order as much as possible: design inspired by OpenVDB.
+- Currently under review - probably with someone here 🙈
+
+## Mipmaps & Ray Acceleration II {.smaller}
+
+- This approach adapts to the populations over iterations!
+
+::: {.horiz-center}
+<video controls loop data-autoplay src="static_assets/lyb_blocks.mp4" style="max-width: 75%;"></video>
+
+:::
+
 # Science!
 
 ## The Model {.smaller}
@@ -181,6 +213,18 @@ with some small angles approximations...
 ::: {.horiz-center}
 ![](static_assets/multithread_18.png){height=300px fig-align="center"}
 ![](static_assets/multithread_20.png){height=300px fig-align="center"}
+:::
+
+## Radiative Losses {.smaller}
+
+```{=tex}
+\begin{equation*}
+L = \int_0^\infty \oint_{\mathbb{S}^2} \left( \eta - \chi I \right) d\Omega d\lambda
+\end{equation*}
+```
+
+::: {.horiz-center}
+![](static_assets/rad_eq_slide.png){height=500px}
 :::
 
 ## Takeaways {.smaller}

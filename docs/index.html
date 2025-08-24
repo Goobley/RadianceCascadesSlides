@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.56">
 
   <meta name="author" content="Chris Osborne">
-  <title>Non-LTE Radiative Models of Coronal Condensations</title>
+  <title>Astronomical Radiative Transfer and Video Games:</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -342,8 +342,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="static_assets/CombinedLogosWhite.webp" data-background-position="2% 2%" data-background-size="25%" class="quarto-title-block center">
-  <h1 class="title"><span class="r-fit-text">Non-LTE Radiative Models of Coronal Condensations</span></h1>
-  <p class="subtitle"><span style="color: var(--teal_c);">at Extreme Resolution</span></p>
+  <h1 class="title"><span class="r-fit-text">Astronomical Radiative Transfer and Video Games:</span></h1>
+  <p class="subtitle"><span style="color: var(--teal_c);">A Match Made in the Sun</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -357,6 +357,45 @@ Chris Osborne
 </div>
 
 </section>
+<section id="who-recognises-this" class="slide level2 smaller">
+<h2>Who recognises this?</h2>
+<div class="horiz-center">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static_assets/box.jpg" class="quarto-figure quarto-figure-center" height="520"></p>
+</figure>
+</div>
+<p><span class="attrib">Cornell University</span></p>
+</div>
+</section>
+<section id="and-how-does-it-connect-to-this" class="slide level2 smaller">
+<h2>And how does it connect to this?</h2>
+<div class="horiz-center">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static_assets/gum41.jpg" class="quarto-figure quarto-figure-center" height="520"></p>
+</figure>
+</div>
+<p><span class="attrib">VLT (ESO)</span></p>
+</div>
+</section>
+<section id="physics" class="slide level2 smaller">
+<h2>Physics!</h2>
+<span class="math display">\begin{align*}
+(\hat{\omega} \cdot \nabla) L(\vec{p}, \hat{\omega}) = &amp;-\chi(\vec{p}, \hat{\omega}) L(\vec{p}, \hat{\omega}) \\
+&amp;+ \eta(\vec{p}, \hat{\omega}) \\
+&amp;+ \sigma_s(\vec{p}, \hat{\omega}) \oint_{\mathbb{S}^2} p(\vec{p}, \hat{\omega}^\prime, \hat{\omega}) L(\vec{p}, \hat{\omega}^\prime)\, d\hat{\omega}^\prime
+\end{align*}</span>
+<p>This hybrid notation will probably make everyone mad!</p>
+<ul>
+<li><span class="math inline">L</span> radiance,</li>
+<li><span class="math inline">\eta</span> emission coefficient,</li>
+<li><span class="math inline">\chi</span> absorption coefficient,</li>
+<li><span class="math inline">\sigma_s</span> scattering coefficient,</li>
+<li><span class="math inline">p</span> phase function.</li>
+</ul>
+<p><span style="color: var(--teal_c);">Key takeaway: this is a recursive integro-differential equation!</span></p>
+</section>
 <section id="non-lte-radiative-transfer" class="slide level2 smaller">
 <h2>Non-LTE Radiative Transfer</h2>
 <div class="columns v-center-container">
@@ -367,46 +406,57 @@ Chris Osborne
 <li>Also, ionisation.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<video loop="" data-autoplay="" src="static_assets/hillier_polito_iris.mp4" width="99%">
+<video loop="" data-autoplay="" src="static_assets/HinodeProm.mp4" width="99%">
 </video>
-<p><span class="attrib">IRIS (Hillier &amp; Polito 2018)</span></p>
+<p><span class="attrib">HINODE BFI</span></p>
 </div></div>
 </section>
-<section id="state-of-the-art-i" class="slide level2 smaller">
-<h2>State of the Art I</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
+<section id="most-important-quantities" class="slide level2 smaller">
+<h2>Most Important Quantities</h2>
+<div class="v-center-container horiz-center">
+<div class="column">
 <ul>
-<li>1.5D and 2D simplified slabs.</li>
-<li>Postprocess multithread stacking (Gunar+ 2008, Peat+ Poster).</li>
-<li>Can produce complex line profiles, but how to motivate velocity distribution?</li>
+<li>Radiative rates depend on intensity.</li>
+<li>Intensity depends on radiative rates.</li>
 </ul>
-</div><div class="column" style="width:50%;">
-<p><img data-src="static_assets/peat_setup.webp" class="quarto-figure quarto-figure-center"> <img data-src="static_assets/peat_slit.webp" class="quarto-figure quarto-figure-center"> <span class="attrib">Peat+ 2023</span></p>
-</div></div>
-</section>
-<section id="state-of-the-art-ii" class="slide level2 smaller">
-<h2>State of the Art II</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
+<div class="fragment">
+<p><br></p>
+<span class="math display">\begin{align*}
+    J_\nu(\vec{p}) &amp;= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
+    &amp;\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
+\end{align*}</span>
 <ul>
-<li>MHD prominence models have advanced dramatically in the last decade.</li>
-<li>Radiative loss approaches have lagged behind (especially vs chromosphere).</li>
-<li>Adopting 1.5D column-by-column approach from chromospheric modelling.</li>
+<li>Specific intensity and its first moment.</li>
+<li>3 and 5 dimensional functions! (+ wavelength…)</li>
+<li>Recursive component solved by fixed-point iteration in the atomic populations.</li>
 </ul>
-</div><div class="column" style="width:50%;">
-<p><img data-src="static_assets/jenkins_15d_prom.webp" class="quarto-figure quarto-figure-center"> <span class="attrib">Jenkins+ 2023</span></p>
+</div>
 </div></div>
 </section>
-<section id="but-how-do-we-gain-insights-on-observations-like-this" class="slide level2 smaller">
-<h2>But how do we gain insights on observations like this?</h2>
-<div class="horiz-center">
-<div class="quarto-figure quarto-figure-center">
+<section id="monte-carlo" class="slide level2">
+<h2>Monte Carlo</h2>
+<div>
+
+</div>
+<div id="figg-montecarlo" class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="figg-8spp" class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="static_assets/iris_fake_noise.webp" class="quarto-figure quarto-figure-center" height="520"></p>
+<p><img data-src="static_assets/kroken-8spp.webp"></p>
+<figcaption>8 spp</figcaption>
 </figure>
 </div>
-<p><span class="attrib">IRIS Mg ɪɪ k</span></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="figg-8192spp" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static_assets/kroken-8192spp.webp"></p>
+<figcaption>8192 spp (PBR Book, Pharr et al)</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="ray-effects" class="slide level2">
@@ -417,8 +467,36 @@ Chris Osborne
 <h2>Desired Result</h2>
 
 <img data-src="static_assets/RcRays.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="radiance-cascades-redux" class="slide level2 smaller">
-<h2>Radiance Cascades: Redux</h2>
+<section id="tricky-radiation" class="slide level2 smaller">
+<h2>Tricky Radiation</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:80%;">
+<ul>
+<li>In the steady-state solution of radiative transfer coupling is <span style="color: var(--teal_c);">global.</span></li>
+<li>This hinders parallelisation (and SC imposes its own additional dependencies even within a patch).</li>
+<li>Monte Carlo approaches have poor convergence rates.</li>
+<li>Spectroscopy has very high anisotropy requirements.</li>
+<li><span style="color: var(--teal_c);">Is there some middle ground?</span></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Video games are now solving an adjacent problem at reasonable resolutions <em>hundreds</em> of times a second on single workstations…</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="radiance-cascades" class="slide level2 smaller">
+<h2>Radiance Cascades</h2>
+<div class="v-center-container">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static_assets/title_final.webp" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="radiance-cascades-observations" class="slide level2 smaller">
+<h2>Radiance Cascades: Observations</h2>
 <div class="columns v-center-container">
 <div class="column" style="width:60%;">
 <ul>
@@ -475,7 +553,13 @@ A &lt; B,\\
 <ul>
 <li>Serves as Nyquist criterion</li>
 </ul></li>
+<li>The cascades sparsely encode the radiation field throughout the domain…</li>
+<li>But not in a form we can use directly.</li>
+<li>Solution:</li>
 </ul>
+<div class="fragment horiz-center">
+<p><br><span style="color: var(--teal_c);">Interpolation. But with minimal error.</span></p>
+</div>
 <div class="fragment">
 <ul>
 <li>Interpolation leads to reuse of rays in upper cascades and the effective construction of exponentially more rays than computed directly.</li>
@@ -483,56 +567,43 @@ A &lt; B,\\
 </div>
 </div></div>
 </section>
-<section>
-<section id="science" class="title-slide slide level1 center">
-<h1>Science!</h1>
+<section id="further-optimisations" class="slide level2 smaller">
+<h2>Further Optimisations</h2>
+<div class="v-center-container">
+<ul>
+<li>GPU-first design (has achieved 40<span class="math inline">\times</span> perf/Watt vs CPU).</li>
+<li>Use a performance-portability library – no ifs, no buts – especially for small teams.
+<ul>
+<li>We use Kokkos with some additional layers.</li>
+<li>Python pre/postprocessing.</li>
+</ul></li>
+<li>First solar non-LTE code to exploit atmospheric sparsity.</li>
+</ul>
+</div>
+</section>
+<section id="mipmaps-ray-acceleration" class="slide level2 smaller">
+<h2>Mipmaps &amp; Ray Acceleration</h2>
+<ul>
+<li>Lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity)</li>
+</ul>
 
+<img data-src="static_assets/adaptive_mip.webp" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li>In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.</li>
+<li>Store data in Morton order as much as possible.</li>
+<li>Inspired by OpenVDB.</li>
+</ul>
 </section>
-<section id="the-model" class="slide level2 smaller">
-<h2>The Model</h2>
-
-<img data-src="static_assets/donne_keppens_evolution.webp" class="quarto-figure quarto-figure-center r-stretch"><p><span class="attrib">Donné &amp; Keppens 2024</span></p>
-</section>
-<section id="ly-β-cocoplot" class="slide level2 smaller">
-<h2>Ly β COCOPLOT</h2>
-<div class="horiz-center">
-<video controls="" loop="" data-autoplay="" src="static_assets/lyb_ccp_wings.mp4" style="max-width: 75%;">
-</video>
-</div>
-</section>
-<section id="mg-ɪɪ-k-cocoplot" class="slide level2 smaller">
-<h2>Mg ɪɪ k COCOPLOT</h2>
-<div class="horiz-center">
-<video controls="" loop="" data-autoplay="" src="static_assets/Mgk_orbit_bettertonemap.mp4" style="max-width: 75%;">
-</video>
-</div>
-</section>
-<section id="diving-into-the-lines-i" class="slide level2 smaller">
-<h2>Diving into the lines I</h2>
-<div class="horiz-center">
-<p><img data-src="static_assets/multithread_18.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_19.webp" class="quarto-figure quarto-figure-center" height="300"></p>
-</div>
-</section>
-<section id="diving-into-the-lines-ii" class="slide level2 smaller">
-<h2>Diving into the lines II</h2>
-<div class="horiz-center">
-<p><img data-src="static_assets/multithread_18.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_20.webp" class="quarto-figure quarto-figure-center" height="300"></p>
-</div>
-</section>
-<section id="takeaways" class="slide level2 smaller">
-<h2>Takeaways</h2>
+<section id="outlook" class="slide level2 smaller">
+<h2>Outlook</h2>
 <div class="columns v-center-container">
 <div class="column" style="width:80%;">
 <ul>
-<li>Simulation structures are typically axis aligned.</li>
-<li>Significant complexity arises from looking outside this alignment.</li>
-<li>The next step in meaningfully interpreting these structures will come from multi-line inversions.</li>
-<li>Radiative losses and ionisation are model dependent, but what generalities can we extract?
+<li>Performance Portability libraries are a force multiplier for small teams.</li>
+<li>Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.</li>
+<li>There <em>are</em> equivalent/adjacent problems in other fields, and it’s worth our time to seek them out.
 <ul>
-<li>How does a detailed radiation treatment affect formation and evolution?</li>
-<li>Work in progress!</li>
+<li>e.g.&nbsp;radiance cascades can be repurposed for cosmological self-gravity</li>
 </ul></li>
-<li>These new techniques will also feed into SAMS.</li>
 </ul>
 <p><br><br> <span style="color: var(--teal_c);">Thanks!</span></p>
 <p><a href="mailto:christopher.osborne@glasgow.ac.uk">Christopher.Osborne@glasgow.ac.uk</a></p>
@@ -540,16 +611,11 @@ A &lt; B,\\
 <p><a href="https://doi.org/10.1093/rasti/rzae062"><img data-src="static_assets/final_rc_qr.webp" alt="Paper"></a> <span class="attrib">Paper</span></p>
 </div></div>
 </section>
-<section id="spatially-convolved-lines-i" class="slide level2 smaller">
-<h2>Spatially Convolved Lines I</h2>
+<section id="ly-β-cocoplot-donné-keppens" class="slide level2 smaller">
+<h2>Ly β COCOPLOT (Donné &amp; Keppens)</h2>
 <div class="horiz-center">
-<p><img data-src="static_assets/multithread_18_convolve.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_19_convolve.webp" class="quarto-figure quarto-figure-center" height="300"></p>
-</div>
-</section>
-<section id="spatially-convolved-lines-ii" class="slide level2 smaller">
-<h2>Spatially Convolved Lines II</h2>
-<div class="horiz-center">
-<p><img data-src="static_assets/multithread_18_convolve.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_20_convolve.webp" class="quarto-figure quarto-figure-center" height="300"></p>
+<video controls="" loop="" data-autoplay="" src="static_assets/lyb_ccp_slit_1x.mp4" style="max-width: 75%;">
+</video>
 </div>
 </section>
 <section id="d-comparison-prominence" class="slide level2 smaller">
@@ -572,7 +638,7 @@ A &lt; B,\\
 <p>Radiance Cascades</p>
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
