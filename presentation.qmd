@@ -269,6 +269,15 @@ with some small angles approximations...
 - Can be efficiently traversed using a hierarchical scheme.
 - This technique has provided a further order of magnitude speedup on typical models.
 
+## Mipmaps III {.smaller}
+
+- This approach adapts automatically during the iterative solution!
+
+::: {.horiz-center}
+<video controls loop data-autoplay src="static_assets/lyb_blocks.mp4" style="max-width: 75%;"></video>
+
+:::
+
 ## Ly β COCOPLOT (Donné & Keppens) {.smaller}
 
 ::: {.horiz-center}
