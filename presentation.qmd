@@ -7,7 +7,7 @@ author:
 format:
   revealjs:
     slide-number: true
-    footer: "Radiance Cascades"
+    footer: "Radiative Transfer and Video Games"
     theme: [night, my_style.scss]
     progress: false
     html-math-method: katex
@@ -48,8 +48,6 @@ format:
 \end{align*}
 ```
 
-This hybrid notation will probably make everyone mad!
-
 - $L$ radiance,
 - $\eta$ emission coefficient,
 - $\chi$ absorption coefficient,
@@ -59,6 +57,37 @@ This hybrid notation will probably make everyone mad!
 
 [Key takeaway: this is a recursive integro-differential equation!]{style="color: var(--teal_c);"}
 
+## Radiative Transfer {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- A wealth of knowledge in spectral lines and continua between UV and IR.
+- Non-trivial to predict and interpret.
+:::
+
+::: {.column width="50%"}
+![FTS, McMath-Pierce Atlas, Kitt Peak, NSO (Kurucz et al.)](static_assets/noao-sun.jpg){ #blah}
+:::
+
+::::
+
+## The Solar Atmosphere {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- Information in these narrow wavebands samples different regions of the solar atmosphere.
+- But not uniquely determined by a single region...
+:::
+
+::: {.column width="50%"}
+![Vernazza et al. 1981 (VAL3)](static_assets/val3c_contributions.png){ #blah}
+:::
+
+::::
+
+
 ## Non-LTE Radiative Transfer {.smaller}
 
 :::: {.columns .v-center-container}
@@ -66,7 +95,7 @@ This hybrid notation will probably make everyone mad!
 ::: {.column width="50%"}
 - Coupling between radiation field and atomic transitions.
 - Extremely computationally demanding, but necessary for many spectral lines.
-- Also, ionisation.
+- Also determines ionisation.
 :::
 
 ::: {.column width="50%"}
@@ -127,9 +156,8 @@ This hybrid notation will probably make everyone mad!
 :::: {.column width="80%"}
 
 - In the steady-state solution of radiative transfer coupling is [global.]{style="color: var(--teal_c);"}
-- This hinders parallelisation (and SC imposes its own additional dependencies even within a patch).
+- This hinders parallelisation.
 - Monte Carlo approaches have poor convergence rates.
-- Spectroscopy has very high anisotropy requirements.
 - [Is there some middle ground?]{style="color: var(--teal_c);"}
 
 ::: {.fragment}
@@ -138,6 +166,20 @@ This hybrid notation will probably make everyone mad!
 ::::
 :::
 
+## Aside: Everything Old is New Again {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+![NVIDIA H100](static_assets/h100.png){fig-align="center" height=400px #blahh}
+:::
+
+::: {.column width="50%"}
+![](static_assets/cray2.png){fig-align="center" height=480px #blahh}
+:::
+
+::::
+
 ## Radiance Cascades {.smaller}
 
 ::: {.v-center-container}
@@ -145,6 +187,8 @@ This hybrid notation will probably make everyone mad!
 ![](static_assets/title_final.png){fig-align="center"}
 
 :::
+
+{{ PenumbraCriterion }}
 
 ## Radiance Cascades: Observations {.smaller}
 
@@ -210,52 +254,20 @@ with some small angles approximations...
 :::
 :::
 
-## Further Optimisations {.smaller}
+## Mipmaps I {.smaller}
 
-::: {.v-center-container}
+- We can employ lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity), and also skip empty space
 
-- GPU-first design (has achieved 40$\times$ perf/Watt vs CPU).
-- Use a performance-portability library -- no ifs, no buts -- especially for small teams.
-  - We use Kokkos with some additional layers.
-  - Python pre/postprocessing.
+![](static_assets/adaptive_mip_2.png){fig-align="center"}
 
-- First solar non-LTE code to exploit atmospheric sparsity.
+- Inspired by OpenVDB and longstanding computer graphics practices.
 
-:::
+## Mipmaps II {.smaller}
 
-## Mipmaps & Ray Acceleration {.smaller}
+![](static_assets/HDDA.png){fig-align="center"}
 
-- Lower resolution proxies for distant rays: mipmaps (recursive spatial averaging) with directionality and adaptive error bounds (variance of log emissivity and opacity)
-
-![](static_assets/adaptive_mip.png){fig-align="center"}
-
-- In practice, upper cascades (longer rays) sample upper MIPs (fewer texels) when variance is low enough.
-- Store data in Morton order as much as possible.
-- Inspired by OpenVDB.
-
-
-## Outlook {.smaller}
-
-:::: {.columns .v-center-container}
-
-::: {.column width=80%}
-- Performance Portability libraries are a force multiplier for small teams.
-- Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
-- There _are_ equivalent/adjacent problems in other fields, and it's worth our time to seek them out.
-  - e.g. radiance cascades can be repurposed for cosmological self-gravity
-
-<br/><br/>
-[Thanks!]{style="color: var(--teal_c);"}
-
-[Christopher.Osborne@glasgow.ac.uk](mailto:christopher.osborne@glasgow.ac.uk)
-:::
-
-::: {.column width=20%}
-[![Paper](static_assets/final_rc_qr.png)](https://doi.org/10.1093/rasti/rzae062)
-[Paper]{.attrib}
-:::
-
-::::
+- Can be efficiently traversed using a hierarchical scheme.
+- This technique has provided a further order of magnitude speedup on typical models.
 
 ## Ly β COCOPLOT (Donné & Keppens) {.smaller}
 
@@ -265,19 +277,26 @@ with some small angles approximations...
 
 :::
 
-## 1.5D Comparison -- Prominence {.smaller}
+## Outlook {.smaller}
 
-![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
+:::: {.columns .v-center-container}
 
-## 1.5D Comparison -- Filament {.smaller}
+::: {.column width=80%}
+- This barely scratches the surface of interdisciplinary computational work, especially for radiation.
+  - Need to develop common language between fields.
+- Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
+  - This work will grow part of the recently funded STFC large award for the Solar Atmospheric Modelling Suite over the next few years.
+  - More efficient cascade designs are being developed.
 
-![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
+<br/><br/>
+[Thanks!]{style="color: var(--teal_c);"}
 
-## Line Formation -- Contribution Function {.smaller}
+[Christopher.Osborne@glasgow.ac.uk](mailto:christopher.osborne@glasgow.ac.uk)
+:::
 
-![](static_assets/cocoplot_ci.png){fig-align="center"}
+<!-- ::: {.column width=20%}
+[![Paper](static_assets/final_rc_qr.png)](https://doi.org/10.1093/rasti/rzae062)
+[Paper]{.attrib}
+::: -->
 
-## Line Formation -- $J_\nu$ {.smaller}
-
-![](static_assets/cocoplot_j.png){fig-align="center"}
-
+::::
