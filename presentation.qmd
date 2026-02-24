@@ -1,13 +1,13 @@
 ---
-title: '[Astronomical Radiative Transfer and Video Games:]{.r-fit-text}'
-subtitle: '[A Match Made in the Sun]{style="color: var(--teal_c);"}'
+title: 'Towards the Next-Generation of'
+subtitle: '[Non-Equilibrium Solar Radiative Transfer Models]{style="color: var(--teal_c);"}'
 author:
   name: Chris Osborne
   affiliation: University of Glasgow
 format:
   revealjs:
     slide-number: true
-    footer: "Radiative Transfer and Video Games"
+    footer: "Towards Next-Generation Radiative Transfer"
     theme: [night, my_style.scss]
     progress: false
     html-math-method: katex
@@ -17,6 +17,211 @@ format:
       data-background-position: 2% 2%
     controls: true
 ---
+
+
+## Non-LTE Radiative Transfer {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- Coupling between radiation field and atomic transitions.
+- Extremely computationally demanding, but necessary for many spectral lines.
+- Also determines ionisation.
+:::
+
+::: {.column width="50%"}
+<video loop data-autoplay src="static_assets/HinodeProm.mp4" width="99%"></video>
+
+[HINODE BFI]{.attrib}
+:::
+
+::::
+
+## The Solar Atmosphere {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- Information in these narrow wavebands samples different regions of the solar atmosphere.
+- But not uniquely determined by a single region...
+:::
+
+::: {.column width="50%"}
+![Vernazza et al. 1981 (VAL3)](static_assets/val3c_contributions.png){ #blah}
+:::
+
+::::
+
+## Most Important Quantities {.smaller}
+
+::: {.v-center-container .horiz-center}
+
+::: {.column}
+
+- Radiative rates depend on intensity.
+- Intensity depends on radiative rates.
+
+:::{.fragment}
+<br/>
+```{=tex}
+\begin{align*}
+    J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
+    &\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
+\end{align*}
+```
+
+- Specific intensity and its first moment.
+- 3 and 5 dimensional functions! (+ wavelength...)
+- Recursive component solved by fixed-point iteration in the atomic populations.
+:::
+:::
+:::
+
+
+## Current Methods {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- RT codes designed around the idea of smooth atmospheres...
+
+::: {.incremental}
+- But ours look like this
+:::
+:::
+
+::: {.column width="50%" .r-stack}
+
+::: {.fragment .current-visible}
+![](static_assets/jk_atmos.png){style="max-width: 80%;"}
+
+[Jenkins & Keppens 2021]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/CarlssonModel.png){style="max-width: 80%;"}
+
+[Carlsson+ 2016]{.attrib}
+:::
+
+::: {.fragment .current-visible}
+![](static_assets/PrzybylskiTemp.png){style="max-width: 80%;"}
+
+[Przybylski+ 2022]{.attrib}
+:::
+
+:::
+
+::::
+
+
+## Flare Observations {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- And observations of flares are hardly smooth.
+
+:::
+
+::: {.column width="50%" .r-stack}
+
+::: {.current-visible}
+![](static_assets/bbso_flare.png){style="max-width: 80%;"}
+
+[NST/BBSO, Jing et al (2016)]{.attrib}
+:::
+:::
+::::
+
+## Simplest 2D Chromospheric Model {.smaller}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+- How are line-profiles affected by 2D transfer effects?
+- Quiet Sun atmosphere surrounding a flare kernel
+  - 125, 250, 500 km widths
+  - Flare-kernel thermodynamics from RADYN.
+- Time-dependent ionisation
+  - Charge conservation
+- No energy feedback into kernel.
+
+:::
+
+::: {.column width="40%" .r-stack}
+
+::: {.current-visible}
+![](static_assets/2d_flare_setup.png){style="max-width: 80%;"}
+
+:::
+:::
+::::
+
+## 125 km Kernel - Hα {.smaller}
+
+::: {.v-center-container}
+::: {.horiz-center}
+<video controls loop data-autoplay src="static_assets/2d_flare_ha_125_re.mp4"></video>
+Intensity along cuts ([red]{style="color: #F06C25;"}, [green]{style="color: #71A72C;"}, [blue]{style="color: #5283A5;"}), and [equivalent plane-parallel model]{style="color: #F197D1;"}.
+:::
+:::
+
+## 500 km Kernel - Ca ɪɪ 8542 {.smaller}
+
+::: {.v-center-container}
+::: {.horiz-center}
+<video controls loop data-autoplay src="static_assets/2d_flare_8542_500_re.mp4"></video>
+Intensity along cuts ([red]{style="color: #F06C25;"}, [green]{style="color: #71A72C;"}, [blue]{style="color: #5283A5;"}), and [equivalent plane-parallel model]{style="color: #F197D1;"}.
+:::
+:::
+
+## Interesting Differences {.smaller}
+::: {.v-center-container}
+::: {.horiz-center}
+![](static_assets/2d_flare_highlights.png){style="max-width: 80%;"}
+:::
+:::
+
+## Line Formation Heights {.smaller}
+::: {.v-center-container}
+::: {.horiz-center}
+![](static_assets/2d_flare_8542_contfn.png){style="max-width: 100%;"}
+
+Even 500 km does not come close to the formation height found in the plane-parallel models.
+:::
+:::
+
+## Radiative Losses {.smaller}
+::: {.v-center-container}
+::: {.horiz-center}
+![](static_assets/2d_flare_radloss.png){style="max-width: 100%;"}
+
+Estimate since this simple model is not energetically consistent.
+:::
+:::
+
+## Motivating Proto-Conclusions {.smaller}
+
+<br/>
+
+::: {}
+- Radiation can propagate energy free from the magnetic field.
+- 2+D radiative transfer for flares really matters.
+- Formation heights change.
+  - Losses and gains change too.
+- Filling factors aren't uniform in wavelength over a line.
+:::
+
+[So...]{style="color: var(--teal_c);" .fragment}
+
+::: {.fragment}
+- Efficient higher dimensionality treatments are needed.
+- Plane-parallel can have high error.
+- A few niggles with the radiation field.
+:::
+
+# Taking a step back...
 
 ## Who recognises this? {.smaller}
 
@@ -57,79 +262,10 @@ format:
 
 [Key takeaway: this is a recursive integro-differential equation!]{style="color: var(--teal_c);"}
 
-## Radiative Transfer {.smaller}
 
-:::: {.columns .v-center-container}
+## Prominence Albedo
 
-::: {.column width="50%"}
-- A wealth of knowledge in spectral lines and continua between UV and IR.
-- Non-trivial to predict and interpret.
-:::
-
-::: {.column width="50%"}
-![FTS, McMath-Pierce Atlas, Kitt Peak, NSO (Kurucz et al.)](static_assets/noao-sun.jpg){ #blah}
-:::
-
-::::
-
-## The Solar Atmosphere {.smaller}
-
-:::: {.columns .v-center-container}
-
-::: {.column width="50%"}
-- Information in these narrow wavebands samples different regions of the solar atmosphere.
-- But not uniquely determined by a single region...
-:::
-
-::: {.column width="50%"}
-![Vernazza et al. 1981 (VAL3)](static_assets/val3c_contributions.png){ #blah}
-:::
-
-::::
-
-
-## Non-LTE Radiative Transfer {.smaller}
-
-:::: {.columns .v-center-container}
-
-::: {.column width="50%"}
-- Coupling between radiation field and atomic transitions.
-- Extremely computationally demanding, but necessary for many spectral lines.
-- Also determines ionisation.
-:::
-
-::: {.column width="50%"}
-<video loop data-autoplay src="static_assets/HinodeProm.mp4" width="99%"></video>
-
-[HINODE BFI]{.attrib}
-:::
-
-::::
-
-## Most Important Quantities {.smaller}
-
-::: {.v-center-container .horiz-center}
-
-::: {.column}
-
-- Radiative rates depend on intensity.
-- Intensity depends on radiative rates.
-
-:::{.fragment}
-<br/>
-```{=tex}
-\begin{align*}
-    J_\nu(\vec{p}) &= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
-    &\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
-\end{align*}
-```
-
-- Specific intensity and its first moment.
-- 3 and 5 dimensional functions! (+ wavelength...)
-- Recursive component solved by fixed-point iteration in the atomic populations.
-:::
-:::
-:::
+![](static_assets/JenkinsAlbedo.png){fig-align="center"}
 
 ## Monte Carlo
 
@@ -140,6 +276,11 @@ format:
 ![8192 spp (PBR Book, Pharr et al)](static_assets/kroken-8192spp.png){ #figg-8192spp}
 
 :::
+
+::: {.horiz-center}
+[Jenkins+ 2024]{.attrib}
+:::
+
 
 ## Ray Effects
 
@@ -286,6 +427,30 @@ with some small angles approximations...
 
 :::
 
+
+## Mg ɪɪ k COCOPLOT {.smaller}
+
+::: {.horiz-center}
+
+<video controls loop data-autoplay src="static_assets/Mgk_orbit_bettertonemap.mp4" style="max-width: 75%;"></video>
+
+:::
+
+## Diving into the lines I {.smaller}
+
+::: {.horiz-center}
+![](static_assets/multithread_18.png){height=300px fig-align="center"}
+![](static_assets/multithread_19.png){height=300px fig-align="center"}
+:::
+
+## Diving into the lines II {.smaller}
+
+::: {.horiz-center}
+![](static_assets/multithread_18.png){height=300px fig-align="center"}
+![](static_assets/multithread_20.png){height=300px fig-align="center"}
+:::
+
+
 ## Outlook {.smaller}
 
 :::: {.columns .v-center-container}
@@ -309,3 +474,33 @@ with some small angles approximations...
 ::: -->
 
 ::::
+
+## Spatially Convolved Lines I {.smaller}
+
+::: {.horiz-center}
+![](static_assets/multithread_18_convolve.png){height=300px fig-align="center"}
+![](static_assets/multithread_19_convolve.png){height=300px fig-align="center"}
+:::
+
+## Spatially Convolved Lines II {.smaller}
+
+::: {.horiz-center}
+![](static_assets/multithread_18_convolve.png){height=300px fig-align="center"}
+![](static_assets/multithread_20_convolve.png){height=300px fig-align="center"}
+:::
+
+## 1.5D Comparison -- Prominence {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_prom.png){fig-align="center"}
+
+## 1.5D Comparison -- Filament {.smaller}
+
+![](static_assets/DexVsPw_jk20200550_fil.png){fig-align="center"}
+
+## Line Formation -- Contribution Function {.smaller}
+
+![](static_assets/cocoplot_ci.png){fig-align="center"}
+
+## Line Formation -- $J_\nu$ {.smaller}
+
+![](static_assets/cocoplot_j.png){fig-align="center"}
