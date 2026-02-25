@@ -456,10 +456,13 @@ with some small angles approximations...
 :::: {.columns .v-center-container}
 
 ::: {.column width=80%}
+- Simulation structures are typically axis aligned.
+- Significant complexity arises from looking outside this alignment.
+<br/><br/>
+
 - This barely scratches the surface of interdisciplinary computational work, especially for radiation.
   - Need to develop common language between fields.
 - Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
-  - This work will grow part of the recently funded STFC large award for the Solar Atmospheric Modelling Suite over the next few years.
   - More efficient cascade designs are being developed.
 
 <br/><br/>

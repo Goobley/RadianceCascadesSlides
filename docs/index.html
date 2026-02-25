@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.56">
 
   <meta name="author" content="Chris Osborne">
-  <title>Astronomical Radiative Transfer and Video Games:</title>
+  <title>Towards the Next-Generation of</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -342,8 +342,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="static_assets/CombinedLogosWhite.webp" data-background-position="2% 2%" data-background-size="25%" class="quarto-title-block center">
-  <h1 class="title"><span class="r-fit-text">Astronomical Radiative Transfer and Video Games:</span></h1>
-  <p class="subtitle"><span style="color: var(--teal_c);">A Match Made in the Sun</span></p>
+  <h1 class="title">Towards the Next-Generation of</h1>
+  <p class="subtitle"><span style="color: var(--teal_c);">Non-Equilibrium Solar Radiative Transfer Models</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -355,6 +355,198 @@ Chris Osborne
           </p>
     </div>
 </div>
+
+</section>
+<section id="non-lte-radiative-transfer" class="slide level2 smaller">
+<h2>Non-LTE Radiative Transfer</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li>Coupling between radiation field and atomic transitions.</li>
+<li>Extremely computationally demanding, but necessary for many spectral lines.</li>
+<li>Also determines ionisation.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<video loop="" data-autoplay="" src="static_assets/HinodeProm.mp4" width="99%">
+</video>
+<p><span class="attrib">HINODE BFI</span></p>
+</div></div>
+</section>
+<section id="the-solar-atmosphere" class="slide level2 smaller">
+<h2>The Solar Atmosphere</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li>Information in these narrow wavebands samples different regions of the solar atmosphere.</li>
+<li>But not uniquely determined by a single region…</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div id="blah" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static_assets/val3c_contributions.webp"></p>
+<figcaption>Vernazza et al.&nbsp;1981 (VAL3)</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="most-important-quantities" class="slide level2 smaller">
+<h2>Most Important Quantities</h2>
+<div class="v-center-container horiz-center">
+<div class="column">
+<ul>
+<li>Radiative rates depend on intensity.</li>
+<li>Intensity depends on radiative rates.</li>
+</ul>
+<div class="fragment">
+<p><br></p>
+<span class="math display">\begin{align*}
+    J_\nu(\vec{p}) &amp;= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
+    &amp;\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
+\end{align*}</span>
+<ul>
+<li>Specific intensity and its first moment.</li>
+<li>3 and 5 dimensional functions! (+ wavelength…)</li>
+<li>Recursive component solved by fixed-point iteration in the atomic populations.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="current-methods" class="slide level2 smaller">
+<h2>Current Methods</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li>RT codes designed around the idea of smooth atmospheres…</li>
+</ul>
+<div>
+<ul>
+<li class="fragment">But ours look like this</li>
+</ul>
+</div>
+</div><div class="column r-stack" style="width:50%;">
+<div class="fragment current-visible">
+<p><img data-src="static_assets/jk_atmos.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Jenkins &amp; Keppens 2021</span></p>
+</div>
+<div class="fragment current-visible">
+<p><img data-src="static_assets/CarlssonModel.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Carlsson+ 2016</span></p>
+</div>
+<div class="fragment current-visible">
+<p><img data-src="static_assets/PrzybylskiTemp.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">Przybylski+ 2022</span></p>
+</div>
+</div></div>
+</section>
+<section id="flare-observations" class="slide level2 smaller">
+<h2>Flare Observations</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li>And observations of flares are hardly smooth.</li>
+</ul>
+</div><div class="column r-stack" style="width:50%;">
+<div class="current-visible">
+<p><img data-src="static_assets/bbso_flare.webp" style="max-width: 80%;"></p>
+<p><span class="attrib">NST/BBSO, Jing et al (2016)</span></p>
+</div>
+</div></div>
+</section>
+<section id="simplest-2d-chromospheric-model" class="slide level2 smaller">
+<h2>Simplest 2D Chromospheric Model</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:50%;">
+<ul>
+<li>How are line-profiles affected by 2D transfer effects?</li>
+<li>Quiet Sun atmosphere surrounding a flare kernel
+<ul>
+<li>125, 250, 500 km widths</li>
+<li>Flare-kernel thermodynamics from RADYN.</li>
+</ul></li>
+<li>Time-dependent ionisation
+<ul>
+<li>Charge conservation</li>
+</ul></li>
+<li>No energy feedback into kernel.</li>
+</ul>
+</div><div class="column r-stack" style="width:40%;">
+<div class="current-visible">
+<p><img data-src="static_assets/2d_flare_setup.webp" style="max-width: 80%;"></p>
+</div>
+</div></div>
+</section>
+<section id="km-kernel---hα" class="slide level2 smaller">
+<h2>125 km Kernel - Hα</h2>
+<div class="v-center-container">
+<div class="horiz-center">
+<video controls="" loop="" data-autoplay="" src="static_assets/2d_flare_ha_125_re.mp4">
+</video>
+<p>Intensity along cuts (<span style="color: #F06C25;">red</span>, <span style="color: #71A72C;">green</span>, <span style="color: #5283A5;">blue</span>), and <span style="color: #F197D1;">equivalent plane-parallel model</span>.</p>
+</div>
+</div>
+</section>
+<section id="km-kernel---ca-ɪɪ-8542" class="slide level2 smaller">
+<h2>500 km Kernel - Ca ɪɪ 8542</h2>
+<div class="v-center-container">
+<div class="horiz-center">
+<video controls="" loop="" data-autoplay="" src="static_assets/2d_flare_8542_500_re.mp4">
+</video>
+<p>Intensity along cuts (<span style="color: #F06C25;">red</span>, <span style="color: #71A72C;">green</span>, <span style="color: #5283A5;">blue</span>), and <span style="color: #F197D1;">equivalent plane-parallel model</span>.</p>
+</div>
+</div>
+</section>
+<section id="interesting-differences" class="slide level2 smaller">
+<h2>Interesting Differences</h2>
+<div class="v-center-container">
+<div class="horiz-center">
+<p><img data-src="static_assets/2d_flare_highlights.webp" style="max-width: 80%;"></p>
+</div>
+</div>
+</section>
+<section id="line-formation-heights" class="slide level2 smaller">
+<h2>Line Formation Heights</h2>
+<div class="v-center-container">
+<div class="horiz-center">
+<p><img data-src="static_assets/2d_flare_8542_contfn.webp" style="max-width: 100%;"></p>
+<p>Even 500 km does not come close to the formation height found in the plane-parallel models.</p>
+</div>
+</div>
+</section>
+<section id="radiative-losses" class="slide level2 smaller">
+<h2>Radiative Losses</h2>
+<div class="v-center-container">
+<div class="horiz-center">
+<p><img data-src="static_assets/2d_flare_radloss.webp" style="max-width: 100%;"></p>
+<p>Estimate since this simple model is not energetically consistent.</p>
+</div>
+</div>
+</section>
+<section id="motivating-proto-conclusions" class="slide level2 smaller">
+<h2>Motivating Proto-Conclusions</h2>
+<p><br></p>
+<div>
+<ul>
+<li>Radiation can propagate energy free from the magnetic field.</li>
+<li>2+D radiative transfer for flares really matters.</li>
+<li>Formation heights change.
+<ul>
+<li>Losses and gains change too.</li>
+</ul></li>
+<li>Filling factors aren’t uniform in wavelength over a line.</li>
+</ul>
+</div>
+<p><span class="fragment" style="color: var(--teal_c);">So…</span></p>
+<div class="fragment">
+<ul>
+<li>Efficient higher dimensionality treatments are needed.</li>
+<li>Plane-parallel can have high error.</li>
+<li>A few niggles with the radiation field.</li>
+</ul>
+</div>
+</section>
+<section>
+<section id="taking-a-step-back" class="title-slide slide level1 center">
+<h1>Taking a step back…</h1>
 
 </section>
 <section id="who-recognises-this" class="slide level2 smaller">
@@ -395,77 +587,10 @@ Chris Osborne
 </ul>
 <p><span style="color: var(--teal_c);">Key takeaway: this is a recursive integro-differential equation!</span></p>
 </section>
-<section id="radiative-transfer" class="slide level2 smaller">
-<h2>Radiative Transfer</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
-<ul>
-<li>A wealth of knowledge in spectral lines and continua between UV and IR.</li>
-<li>Non-trivial to predict and interpret.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div id="blah" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="static_assets/noao-sun.jpg"></p>
-<figcaption>FTS, McMath-Pierce Atlas, Kitt Peak, NSO (Kurucz et al.)</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
-<section id="the-solar-atmosphere" class="slide level2 smaller">
-<h2>The Solar Atmosphere</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
-<ul>
-<li>Information in these narrow wavebands samples different regions of the solar atmosphere.</li>
-<li>But not uniquely determined by a single region…</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div id="blah" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="static_assets/val3c_contributions.webp"></p>
-<figcaption>Vernazza et al.&nbsp;1981 (VAL3)</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
-<section id="non-lte-radiative-transfer" class="slide level2 smaller">
-<h2>Non-LTE Radiative Transfer</h2>
-<div class="columns v-center-container">
-<div class="column" style="width:50%;">
-<ul>
-<li>Coupling between radiation field and atomic transitions.</li>
-<li>Extremely computationally demanding, but necessary for many spectral lines.</li>
-<li>Also determines ionisation.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<video loop="" data-autoplay="" src="static_assets/HinodeProm.mp4" width="99%">
-</video>
-<p><span class="attrib">HINODE BFI</span></p>
-</div></div>
-</section>
-<section id="most-important-quantities" class="slide level2 smaller">
-<h2>Most Important Quantities</h2>
-<div class="v-center-container horiz-center">
-<div class="column">
-<ul>
-<li>Radiative rates depend on intensity.</li>
-<li>Intensity depends on radiative rates.</li>
-</ul>
-<div class="fragment">
-<p><br></p>
-<span class="math display">\begin{align*}
-    J_\nu(\vec{p}) &amp;= \frac{1}{4\pi}\oint_\mathbb{S^2} I_\nu(\vec{p},\hat{\omega}) \mathop{d \hat{\omega} } \\
-    &amp;\vec{p} \in \mathbb{R}^2, \hat{\omega} \in \mathbb{S}^2\\
-\end{align*}</span>
-<ul>
-<li>Specific intensity and its first moment.</li>
-<li>3 and 5 dimensional functions! (+ wavelength…)</li>
-<li>Recursive component solved by fixed-point iteration in the atomic populations.</li>
-</ul>
-</div>
-</div></div>
-</section>
+<section id="prominence-albedo" class="slide level2">
+<h2>Prominence Albedo</h2>
+
+<img data-src="static_assets/JenkinsAlbedo.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="monte-carlo" class="slide level2">
 <h2>Monte Carlo</h2>
 <div>
@@ -490,6 +615,9 @@ Chris Osborne
 </div>
 </div>
 </div>
+</div>
+<div class="horiz-center">
+<p><span class="attrib">Jenkins+ 2024</span></p>
 </div>
 </section>
 <section id="ray-effects" class="slide level2">
@@ -664,18 +792,38 @@ A &lt; B,\\
 </video>
 </div>
 </section>
+<section id="mg-ɪɪ-k-cocoplot" class="slide level2 smaller">
+<h2>Mg ɪɪ k COCOPLOT</h2>
+<div class="horiz-center">
+<video controls="" loop="" data-autoplay="" src="static_assets/Mgk_orbit_bettertonemap.mp4" style="max-width: 75%;">
+</video>
+</div>
+</section>
+<section id="diving-into-the-lines-i" class="slide level2 smaller">
+<h2>Diving into the lines I</h2>
+<div class="horiz-center">
+<p><img data-src="static_assets/multithread_18.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_19.webp" class="quarto-figure quarto-figure-center" height="300"></p>
+</div>
+</section>
+<section id="diving-into-the-lines-ii" class="slide level2 smaller">
+<h2>Diving into the lines II</h2>
+<div class="horiz-center">
+<p><img data-src="static_assets/multithread_18.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_20.webp" class="quarto-figure quarto-figure-center" height="300"></p>
+</div>
+</section>
 <section id="outlook" class="slide level2 smaller">
 <h2>Outlook</h2>
 <div class="columns v-center-container">
 <div class="column" style="width:80%;">
 <ul>
-<li>This barely scratches the surface of interdisciplinary computational work, especially for radiation.
+<li><p>Simulation structures are typically axis aligned.</p></li>
+<li><p>Significant complexity arises from looking outside this alignment. <br><br></p></li>
+<li><p>This barely scratches the surface of interdisciplinary computational work, especially for radiation.</p>
 <ul>
 <li>Need to develop common language between fields.</li>
 </ul></li>
-<li>Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.
+<li><p>Radiance cascades provide the first meaningful change to solar non-LTE RT in 30 years and it came from outside the field.</p>
 <ul>
-<li>This work will grow part of the recently funded STFC large award for the Solar Atmospheric Modelling Suite over the next few years.</li>
 <li>More efficient cascade designs are being developed.</li>
 </ul></li>
 </ul>
@@ -686,12 +834,40 @@ A &lt; B,\\
 [Paper]{.attrib}
 ::: -->
 </div>
-<div class="quarto-auto-generated-content">
-<div class="footer footer-default">
-<p>Radiative Transfer and Video Games</p>
-</div>
+</section>
+<section id="spatially-convolved-lines-i" class="slide level2 smaller">
+<h2>Spatially Convolved Lines I</h2>
+<div class="horiz-center">
+<p><img data-src="static_assets/multithread_18_convolve.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_19_convolve.webp" class="quarto-figure quarto-figure-center" height="300"></p>
 </div>
 </section>
+<section id="spatially-convolved-lines-ii" class="slide level2 smaller">
+<h2>Spatially Convolved Lines II</h2>
+<div class="horiz-center">
+<p><img data-src="static_assets/multithread_18_convolve.webp" class="quarto-figure quarto-figure-center" height="300"> <img data-src="static_assets/multithread_20_convolve.webp" class="quarto-figure quarto-figure-center" height="300"></p>
+</div>
+</section>
+<section id="d-comparison-prominence" class="slide level2 smaller">
+<h2>1.5D Comparison – Prominence</h2>
+
+<img data-src="static_assets/DexVsPw_jk20200550_prom.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="d-comparison-filament" class="slide level2 smaller">
+<h2>1.5D Comparison – Filament</h2>
+
+<img data-src="static_assets/DexVsPw_jk20200550_fil.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="line-formation-contribution-function" class="slide level2 smaller">
+<h2>Line Formation – Contribution Function</h2>
+
+<img data-src="static_assets/cocoplot_ci.webp" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="line-formation-j_nu" class="slide level2 smaller">
+<h2>Line Formation – <span class="math inline">J_\nu</span></h2>
+
+<img data-src="static_assets/cocoplot_j.webp" class="quarto-figure quarto-figure-center r-stretch"><div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+<p>Towards Next-Generation Radiative Transfer</p>
+</div>
+</div>
+</section></section>
     </div>
   </div>
 
